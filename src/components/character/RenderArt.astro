@@ -1,0 +1,24 @@
+---
+import type { Arts, ToRender } from "../../types/formated.character";
+
+interface Props {
+    rend: ToRender;
+    from: Arts;
+}
+
+const { rend, from } = Astro.props;
+---
+
+<article>
+    <img src={`/src/assets/card/${rend.toUpperCase()}.webp`} alt="" />
+    {
+        from[rend] && from[rend][0] ? (
+            <>
+                <h2>{from[rend][0][0]}</h2>
+                <pre>{from[rend][0][1]}</pre>
+            </>
+        ) : (
+            <p>Data not available</p>
+        )
+    }
+</article>

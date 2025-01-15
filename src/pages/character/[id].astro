@@ -1,0 +1,482 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { CUT_API_URL, BASE_API_ENDPOINTS, BASE_API_URL } from "../../utils/API";
+import type { FormatedCharacter, Tag } from "../../types/formated.character";
+import { COLORS, RARITY, RARITY_BIG } from "../../utils/atributes";
+import RenderArt from "../../components/character/RenderArt.astro";
+import RenderMain from "../../components/RenderMain.astro";
+import RenderUniques from "../../components/RenderUniques.astro";
+import ZenkaiButton from "../../components/button/ZenkaiButton.astro";
+import TransformButton from "../../components/button/TransformButton.astro";
+import TagButton from "../../components/button/TagButton.astro";
+import FusionButton from "../../components/button/FusionButton.astro";
+
+const { id } = Astro.params;
+
+async function getData() {
+    const response = await fetch(`${BASE_API_URL}${BASE_API_ENDPOINTS.id(id)}`);
+    const data = await response.json();
+
+    return data;
+}
+
+const character: FormatedCharacter = await getData();
+const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
+
+const color = COLORS[character.color[0]._id];
+const rar = RARITY[character.rarity._id];
+const rarity = RARITY_BIG[character.rarity._id];
+---
+
+<Layout Title={`${character._id} - ${character.name}`}>
+    <div class={`character`}>
+        <section class={`character-banner ${color}`} data-stage="first">
+            <img
+                class="bchacut st on"
+                src={`${CUT_API_URL}${id}.webp`}
+                alt=""
+            />
+            {
+                (character.transformable || character.switch) && (
+                    <img
+                        class="bchacut nd off"
+                        src={`${CUT_API_URL}${id}2.webp`}
+                    />
+                )
+            }
+            {
+                (character.transformable || character.switch) && (
+                    <img
+                        class="bchacut rd off"
+                        src={`${CUT_API_URL}${id}3.webp`}
+                    />
+                )
+            }
+
+            <article class="rarity-lf">
+                <img
+                    class="character-rarity"
+                    src={`/rarity/${rarity}.webp`}
+                    alt="Rareza del personaje"
+                />
+                {
+                    character.lf && (
+                        <img
+                            class="lf"
+                            src="/props/LegendsLimited.webp"
+                            alt="El personaje es LEGENDS LIMITED"
+                        />
+                    )
+                }
+            </article>
+
+            <aside class="buttons">
+                {character.zenkai && <ZenkaiButton />}
+                {character.switch && <TagButton />}
+                {character.transformable && <TransformButton />}
+                {character.fusion && <FusionButton />}
+            </aside>
+
+            <article class="text">
+                <img
+                    class="character-element"
+                    src={`/element/${color}1.webp`}
+                    alt="Afinidad del personaje"
+                />
+                <h3>{character._id}</h3>
+                <h2>{character.name}</h2>
+            </article>
+        </section>
+
+        <section>
+            <h2>Habilidad principal</h2>
+            <RenderMain
+                abilities={abilities}
+                zenkaiAbilities={zenkaiAbilities}
+                character={{
+                    switch: character.switch,
+                    transformable: character.transformable,
+                    zenkai: character.zenkai,
+                    fusion: character.fusion,
+                }}
+            />
+        </section>
+
+        <section>
+            <h2>Habilidades unicas</h2>
+            <RenderUniques
+                abilities={abilities}
+                zenkaiAbilities={zenkaiAbilities}
+                character={{
+                    switch: character.switch,
+                    transformable: character.transformable,
+                    zenkai: character.zenkai,
+                    fusion: character.fusion,
+                }}
+            />
+        </section>
+    </div>
+</Layout>
+
+<script>
+    const ndZenkai = document.querySelectorAll(".nd-zenkai");
+    const stZenkai = document.querySelectorAll(".st-zenkai");
+    const st = document.querySelectorAll(".st");
+    const nd = document.querySelectorAll(".nd");
+    const rd = document.querySelectorAll(".rd");
+
+    const zenkaiToggle =
+        document.querySelector<HTMLDivElement>(".zenkai-toggle");
+    const transformToggle =
+        document.querySelector<HTMLDivElement>(".transform-toggle");
+    const tagToggle = document.querySelector<HTMLDivElement>(".tag-toggle");
+    const fusionToggle =
+        document.querySelector<HTMLDivElement>(".fusion-toggle");
+
+    zenkaiToggle?.addEventListener("click", (e: MouseEvent): void =>
+        handleZenkaiToggle(e),
+    );
+    transformToggle?.addEventListener("click", (e: MouseEvent): void =>
+        handleTransformToggle(e),
+    );
+    tagToggle?.addEventListener("click", (e: MouseEvent): void =>
+        handleTagToggle(e),
+    );
+    fusionToggle?.addEventListener("click", (e: MouseEvent): void =>
+        handleFusionToggle(e),
+    );
+
+    function handleZenkaiToggle(e: MouseEvent): void {
+        const target = e.currentTarget as HTMLElement;
+
+        if (isOff(target)) {
+            if (isOff(transformToggle) && isOff(tagToggle)) {
+                toggleOffList(st);
+                toggleOnList(stZenkai);
+                st[0]?.classList.remove("off");
+                st[0]?.classList.add("on");
+            } else {
+                toggleOffList(nd);
+                toggleOnList(ndZenkai);
+                nd[0]?.classList.remove("off");
+                nd[0]?.classList.add("on");
+            }
+            setToggleOn(target);
+        } else {
+            if (isOff(transformToggle) && isOff(tagToggle)) {
+                toggleOffList(stZenkai);
+                toggleOnList(st);
+            } else {
+                toggleOffList(ndZenkai);
+                toggleOnList(nd);
+            }
+            setToggleOff(target);
+        }
+    }
+
+    function handleTransformToggle(e: MouseEvent): void {
+        const target = e.currentTarget as HTMLElement;
+
+        if (isOff(target)) {
+            if (isOn(zenkaiToggle)) {
+                st[0]?.classList.add("off");
+                st[0]?.classList.remove("on");
+                toggleOffList(stZenkai);
+                toggleOnList(ndZenkai);
+                nd[0]?.classList.remove("off");
+                nd[0]?.classList.add("on");
+            } else {
+                toggleOffList(st);
+                toggleOnList(nd);
+            }
+            setToggleOn(target);
+        } else {
+            if (isOn(zenkaiToggle)) {
+                toggleOffList(ndZenkai);
+                nd[0]?.classList.add("off");
+                nd[0]?.classList.remove("on");
+                toggleOnList(stZenkai);
+                st[0]?.classList.remove("off");
+                st[0]?.classList.add("on");
+            } else {
+                toggleOffList(nd);
+                toggleOnList(st);
+            }
+            setToggleOff(target);
+        }
+    }
+
+    function handleTagToggle(e: MouseEvent): void {
+        const target = e.currentTarget as HTMLElement;
+
+        if (isOff(target)) {
+            if (isOn(transformToggle)) {
+                toggleOffList(nd);
+                toggleOnList(rd);
+            } else {
+                toggleOffList(st);
+                toggleOnList(nd);
+            }
+            setToggleOn(target);
+            setToggleOff(fusionToggle as HTMLElement);
+            toggleOffList(rd);
+        } else {
+            if (isOn(transformToggle)) {
+                toggleOffList(rd);
+                toggleOnList(nd);
+            } else {
+                toggleOffList(nd);
+                toggleOnList(st);
+            }
+            setToggleOff(target);
+        }
+    }
+
+    function handleFusionToggle(e: MouseEvent): void {
+        const target = e.currentTarget as HTMLElement;
+
+        if (isOff(target)) {
+            toggleOffList(st);
+            toggleOffList(nd);
+            toggleOnList(rd);
+            setToggleOn(target);
+            setToggleOff(tagToggle as HTMLElement);
+        } else {
+            toggleOffList(rd);
+            toggleOnList(st);
+            setToggleOff(target);
+        }
+    }
+
+    function toggleOffList(elements: NodeListOf<Element>): void {
+        elements.forEach((element) => {
+            if (element.classList.contains("on")) {
+                element.classList.remove("on");
+            }
+            element.classList.add("off");
+        });
+    }
+
+    function toggleOnList(elements: NodeListOf<Element>): void {
+        elements.forEach((element) => {
+            if (element.classList.contains("off")) {
+                element.classList.remove("off");
+            }
+            element.classList.add("on");
+        });
+    }
+
+    function setToggleOn(target: HTMLElement): void {
+        target.classList.remove("off");
+        target.classList.add("on");
+    }
+
+    function setToggleOff(target: HTMLElement): void {
+        target.classList.remove("on");
+        target.classList.add("off");
+    }
+
+    function isOn(element: HTMLElement | null): boolean {
+        return element?.classList.contains("on") ?? false;
+    }
+
+    function isOff(element: HTMLElement | null): boolean {
+        return !isOn(element);
+    }
+</script>
+
+<style is:global>
+    :root {
+        --br: 16px;
+    }
+
+    .character {
+        width: 100%;
+
+        & article:not(article.text) {
+            padding: 0 var(--br);
+
+            h3 {
+                margin: 0.5rem 0;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            pre {
+                margin-bottom: 1.5rem;
+                font-size: 1.125rem;
+            }
+        }
+
+        .character-banner {
+            display: flex;
+            position: relative;
+            outline: 1px solid;
+            border-radius: var(--br);
+
+            .bchacut {
+                width: 100%;
+                aspect-ratio: 4/1;
+            }
+
+            img:not(img.bchacut),
+            article.text,
+            .buttons,
+            .rarity-lf {
+                position: absolute;
+            }
+
+            article.rarity-lf {
+                top: var(--br);
+                display: flex;
+                flex-direction: column;
+
+                .character-rarity {
+                    position: relative;
+                    aspect-ratio: 512/128;
+                    width: 60%;
+                }
+
+                .lf {
+                    position: relative;
+                    width: 40%;
+                    left: 50%;
+                    transform: translateX(-100%);
+                }
+            }
+
+            .buttons {
+                right: var(--br);
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .button {
+                    max-width: 72px;
+                    aspect-ratio: 1;
+                    height: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition:
+                        transform 0.2s ease-in-out,
+                        filter 0.2s ease-in-out;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+
+                    &.off {
+                        filter: grayscale();
+                    }
+
+                    img {
+                        position: relative;
+                        width: 100%;
+                        object-fit: contain;
+                    }
+                }
+            }
+
+            article.text {
+                display: flex;
+                flex-direction: column;
+                left: var(--br);
+                bottom: var(--br);
+                line-height: 1.1;
+
+                .character-element {
+                    top: -100%;
+                    left: -16px;
+                }
+
+                h2 {
+                    font-size: 2rem;
+                }
+                h3 {
+                    font-size: 1.5rem;
+                }
+            }
+
+            &.PUR {
+                background-image: conic-gradient(
+                    from 0deg,
+                    #6926af 5%,
+                    #6826af4f,
+                    transparent,
+                    transparent,
+                    #6826af3f,
+                    #6926af
+                );
+                outline-color: #6926af;
+            }
+
+            &.RED {
+                background-image: conic-gradient(
+                    from 0deg,
+                    #DC2121 5%,
+                    #dc21215d,
+                    transparent,
+                    transparent,
+                    #dc212146,
+                    #DC2121
+                );
+                outline-color: #DC2121;
+            }
+
+            &.GRN {
+                background-image: conic-gradient(
+                    from 0deg,
+                    #16AF15 5%,
+                    #15af1549,
+                    transparent,
+                    transparent,
+                    #15af153f,
+                    #16AF15
+                );
+                outline-color: #16AF15;
+            }
+
+            &.BLU {
+                background-image: conic-gradient(
+                    from 0deg,
+                    #0c6bf2 5%,
+                    #0c6cf256,
+                    transparent,
+                    transparent,
+                    #0c6cf23d,
+                    #0c6bf2
+                );
+                outline-color: #0c6bf2;
+            }
+            &.YEL {
+                background-image: conic-gradient(
+                    from 0deg,
+                    #f4e61d 5%,
+                    #f4e61d4f,
+                    transparent,
+                    transparent,
+                    #f4e61d3a,
+                    #f4e61d
+                );
+                outline-color: #f4e61d;
+            }
+        }
+    }
+
+    pre {
+        white-space: pre-line;
+        word-wrap: break-word;
+    }
+
+    .off {
+        display: none;
+    }
+
+    .on {
+        display: block;
+    }
+</style>

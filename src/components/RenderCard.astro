@@ -1,0 +1,163 @@
+---
+import type { SummaryCharacter } from "../types/summary.formated.character";
+import { ICO_API_URL } from "../utils/API";
+import { COLORS, RARITY } from "../utils/atributes";
+
+interface Props {
+    char: SummaryCharacter;
+}
+
+const { char } = Astro.props;
+
+const color = COLORS[char.color[0]._id];
+const rar = RARITY[char.rarity._id];
+---
+
+<a href={`/character/${char.num}`}>
+    <article class={`card ${char._id}`}>
+        <img
+            class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`}
+            src={`${ICO_API_URL}${char.num}.webp`}
+            alt=""
+        />
+        {
+            (char.transformable || char.switch) && (
+                <img
+                    class="card-bchaico nd"
+                    src={`${ICO_API_URL}${char.num}2.webp`}
+                    alt=""
+                />
+            )
+        }
+        <!-- {
+            char.fusion && (
+                <img
+                    class="card-bchaico rd"
+                    src={`${ICO_API_URL}${char.num}3.webp`}
+                    alt=""
+                />
+            )
+        } -->
+        <img class="card-color" src={`/color/${color}.webp`} alt="" />
+        <img class="card-element" src={`/element/${color}1.webp`} alt="" />
+        <img class="card-rarity" src={`/rarity/${rar}.webp`} alt="" />
+        {char.lf && <img class="card-ll" src={`/props/LL.webp`} alt="" />}
+        {
+            char.zenkai && (
+                <img class="card-zenkai" src={`/props/ZENKAI.webp`} alt="" />
+            )
+        }
+    </article>
+</a>
+
+<style>
+    article.card {
+        width: 140px;
+        position: relative;
+        transition: 0.2s ease-in-out transform;
+
+        &:hover {
+            transform: scale(1.01);
+        }
+
+        img.card-bchaico,
+        img.card-color {
+            width: 100%;
+        }
+
+        img.card-zenkai {
+            max-width: 96px;
+            right: -7.5%;
+            top: 10%;
+            z-index: 3;
+        }
+
+        img:not(img.card-bchaico.st) {
+            position: absolute;
+        }
+
+        img.nd,
+        img.rd {
+            position: absolute;
+            left: 0;
+            bottom: -16px;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeIn 12s infinite;
+        }
+
+        img.card-bchaico.st {
+            position: relative;
+            bottom: -16px;
+            z-index: 3;
+
+            &.fade {
+                opacity: 1;
+                animation: fadeOut 12s infinite;
+            }
+        }
+
+        img.card-element {
+            top: 10%;
+            left: -10%;
+            z-index: 3;
+        }
+
+        img.card-rarity {
+            width: 72px;
+            bottom: 2.5%;
+            left: 0;
+            z-index: 3;
+        }
+
+        img.card-ll {
+            bottom: 3%;
+            left: 50%;
+            translate: -50% 0;
+            z-index: 2;
+        }
+
+        img.card-color {
+            left: 50%;
+            translate: -50% 0;
+            bottom: 0;
+            z-index: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @media (min-width: 769px) {
+        article.card {
+            width: 160px;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        article.card {
+            width: 180px;
+        }
+    }
+</style>

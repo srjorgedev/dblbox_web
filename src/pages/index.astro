@@ -1,11 +1,67 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import {
+	BASE_API_URL,
+	BASE_API_ENDPOINTS,
+	ELE_API_URL,
+	ICO_API_URL,
+	COLOR_API_URL,
+	RAR_API_URL,
+} from "../utils/API";
+import type { SummaryCharacter } from "../types/summary.formated.character";
+import { COLORS, RARITY } from "../utils/atributes";
+import RenderCard from "../components/RenderCard.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+async function getData() {
+	try {
+		const response = await fetch(
+			`${BASE_API_URL}${BASE_API_ENDPOINTS.all}`,
+			{
+				method: "GET",
+				redirect: "manual",
+			},
+		);
+
+		if (response.status >= 300 && response.status < 400) {
+			const location = response.headers.get("Location");
+			throw new Error(`Redirection detected: ${location}`);
+		}
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		const json: SummaryCharacter[] = await response.json();
+		return json;
+	} catch (error) {
+		console.error("Fetch error:", error);
+	}
+}
+const characters = await getData();
 ---
 
-<Layout>
-	<Welcome />
+<Layout Title="Personajes">
+	<section class="characters-render">
+		{
+			characters &&
+				characters.map((char: SummaryCharacter, i: number) =>  <RenderCard char={char} />)
+		}
+	</section>
 </Layout>
+
+<style>
+	a {
+		text-decoration: none;
+		color: white;
+	}
+
+	section.characters-render {
+		height: inherit;
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		align-items: center;
+		justify-content: center;
+	}
+</style>
