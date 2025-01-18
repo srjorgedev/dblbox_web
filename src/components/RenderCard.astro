@@ -13,7 +13,20 @@ const color = COLORS[char.color[0]._id];
 const rar = RARITY[char.rarity._id];
 ---
 
-<a href={`/character/${char.num}`}>
+<a
+    href={`/character/${char.num}`}
+    class="character-card"
+    data-color={`[${char.color[0]._id}${char.color.length > 1 ? "," + char.color[1]._id : ""}]`}
+    data-rarity={char.rarity._id}
+    data-tags={`[${char.tags.map(item => item._id).join(",")}]`}
+    data-chapter={char.chapter._id}
+    data-type={char.type._id}
+    data-name={char.name}
+    data-zenkai={char.zenkai}
+    data-switch={char.switch}
+    data-transformable={char.transformable}
+    data-ll={char.lf}
+>
     <article class={`card ${char._id}`}>
         <img
             class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`}
@@ -51,8 +64,11 @@ const rar = RARITY[char.rarity._id];
 </a>
 
 <style>
+    .hidden {
+        display: none;
+    }
     article.card {
-        width: 140px;
+        width: 100%;
         position: relative;
         transition: 0.2s ease-in-out transform;
 
@@ -146,18 +162,6 @@ const rar = RARITY[char.rarity._id];
         }
         100% {
             opacity: 0;
-        }
-    }
-
-    @media (min-width: 769px) {
-        article.card {
-            width: 160px;
-        }
-    }
-
-    @media (min-width: 1000px) {
-        article.card {
-            width: 180px;
         }
     }
 </style>

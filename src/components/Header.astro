@@ -1,32 +1,96 @@
 ---
-
+import Dashboard from "./svg/Dashboard.astro";
+import User from "./svg/User.astro";
+import Lang from "./svg/Lang.astro";
+import Menu from "./svg/Menu.astro";
 ---
 
 <header>
     <nav>
-        <ul>
-            <label>BOX</label>
+        <h4>BOX</h4>
+        <ul class="nav-links">
             <!-- <li><a href="/">Pagina principal</a></li> -->
             <li><a href="/">Personajes</a></li>
             <!-- <li><a href="/equips">Fragmentos</a></li> -->
+        </ul>
+        <ul class="nav-buttons">
+            <li>
+                <a href="/dashboard/">
+                    <div><Lang /></div>
+                </a>
+            </li>
+            <li>
+                <a href="/dashboard/">
+                    <div><User /></div>
+                </a>
+            </li>
+            <li>
+                <a href="/dashboard/">
+                    <div><Dashboard /></div>
+                </a>
+            </li>
+            <li class="menu"><a><div><Menu /></div></a></li>
         </ul>
     </nav>
 </header>
 
 <style>
+    html.color-1 {
+        header {
+            background-color: rgba(255, 0, 0, 0.048);
+            outline: 2px solid rgba(255, 0, 0, 0.28);
+        }
+    }
+    html.color-2 {
+        header {
+            background-color: rgba(255, 255, 0, 0.048);
+            outline: 2px solid rgba(255, 255, 0, 0.28);
+        }
+    }
+    html.color-3 {
+        header {
+            background-color: rgba(98, 0, 255, 0.048);
+            outline: 2px solid rgba(98, 0, 255, 0.28);
+        }
+    }
+    html.color-4 {
+        header {
+            background-color: rgba(21, 255, 0, 0.048);
+            outline: 2px solid rgba(21, 255, 0, 0.28);
+        }
+    }
+    html.color-5 {
+        header {
+            background-color: rgba(0, 204, 255, 0.048);
+            outline: 2px solid rgba(0, 204, 255, 0.28);
+        }
+    }
+
+    h4 {
+        margin-right: 1.25rem;
+    }
+
+    ul li:not(.menu) {
+        display: none;
+    }
+
     header {
         margin: 2rem 0;
         padding: 1rem 2rem;
         border-radius: 1.5rem;
-        width: 100%;
-        background-color: rgba(172, 36, 36, 0.048);
-        outline: 2px solid rgba(172, 36, 36, 0.28);
+        width: calc(100% - 2rem);
+        background-color: rgba(255, 255, 255, 0.048);
+        outline: 2px solid rgba(255, 255, 255, 0.28);
         backdrop-filter: blur(24px);
         display: flex;
         justify-content: center;
         position: sticky;
         top: 2rem;
+        left: 1rem;
         z-index: 5;
+        transition:
+            background 0.15s ease-in-out,
+            outline 0.15s ease-in-out;
 
         nav,
         ul {
@@ -35,7 +99,7 @@
             align-items: center;
         }
 
-        ul {
+        ul.nav-links {
             gap: 1.25rem;
             li {
                 display: flex;
@@ -43,14 +107,71 @@
                 justify-content: center;
                 list-style-type: none;
                 padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                transition: background 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: #f1f1f1;
+
+                    a {
+                        filter: invert();
+                    }
+                }
 
                 a {
                     text-decoration: none;
                     color: #f1f1f1;
                     font-size: 1.5rem;
                     font-weight: 600;
+                    transition: filter 0.3s ease-in-out;
                 }
             }
+        }
+
+        ul.nav-buttons {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+
+            li {
+                list-style-type: none;
+                border-radius: 0.5rem;
+                transition: background 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: #f1f1f1;
+
+                    svg {
+                        filter: invert();
+                    }
+                }
+
+                a {
+                    div {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 48px;
+                        aspect-ratio: 1/1;
+
+                        svg {
+                            transition: filter 0.3s ease-in-out;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: 769px) {
+        ul li:not(.menu) {
+            display: block;
+        }
+        .menu {
+            display: none;
         }
     }
 </style>

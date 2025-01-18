@@ -1,0 +1,209 @@
+---
+import reset from "../assets/reset.svg";
+import Reset from "./svg/Reset.astro";
+---
+
+<section class="filters">
+    <h4>FILTROS</h4>
+
+    <div class="filters-select">
+        <select class="filter-color">
+            <option selected hidden value="">Color</option>
+            <option value="1">ROJ</option>
+            <option value="2">AMA</option>
+            <option value="3">MOR</option>
+            <option value="4">VER</option>
+            <option value="5">AZU</option>
+        </select>
+        <select class="filter-type">
+            <option selected hidden value="">Tipo</option>
+            <option value="1">APOYO</option>
+            <option value="2">DEFENSA</option>
+            <option value="3">FÍSICO</option>
+            <option value="4">ENERGÍA</option>
+        </select>
+        <select class="filter-rarity">
+            <option selected hidden value="">Rareza</option>
+            <option value="1">HERO</option>
+            <option value="2">EXTREME</option>
+            <option value="3">SPARKING</option>
+            <option value="4">ULTRA</option>
+        </select>
+        <button class="clear-filters">
+            <Reset />
+        </button>
+    </div>
+</section>
+
+<script>
+    const clearFiltersButton = document.querySelector<HTMLButtonElement>(".clear-filters");
+    const characterCards = document.querySelectorAll<HTMLAnchorElement>("a.character-card");
+    const filterByColor = document.querySelector<HTMLSelectElement>("select.filter-color");
+    const filterByType = document.querySelector<HTMLSelectElement>("select.filter-type");
+    const filterByRarity = document.querySelector<HTMLSelectElement>("select.filter-rarity");
+
+    let activeFilters: { color?: number; type?: number; rarity?: number } = {};
+
+    filterByColor?.addEventListener("change", (e) => {
+        const selectedValue = parseInt((e.currentTarget as HTMLSelectElement).value);
+        activeFilters.color = selectedValue || undefined;
+
+        const previousClass = document.documentElement.classList.value.match(/color-\d+/);
+        if (previousClass) {
+            document.documentElement.classList.replace(previousClass[0], `color-${selectedValue}`);
+        } else {
+            document.documentElement.classList.add(`color-${selectedValue}`);
+        }
+        applyFilters();
+    });
+
+    filterByType?.addEventListener("change", (e) => {
+        const selectedValue = parseInt((e.currentTarget as HTMLSelectElement).value);
+        activeFilters.type = selectedValue || undefined;
+
+        applyFilters();
+    });
+
+    filterByRarity?.addEventListener("change", (e) => {
+        const selectedValue = parseInt((e.currentTarget as HTMLSelectElement).value);
+        activeFilters.rarity = selectedValue || undefined;
+
+        applyFilters();
+    });
+
+    function applyFilters(): void {
+        characterCards.forEach((card) => {
+            let shouldHide = false;
+
+            if (activeFilters.color) {
+                const color: number[] = JSON.parse(card.dataset.color!);
+                if (!color.includes(activeFilters.color)) {
+                    shouldHide = true;
+                }
+            }
+
+            if (activeFilters.type) {
+                const type: number = JSON.parse(card.dataset.type!);
+                if (!(type == activeFilters.type)) {
+                    shouldHide = true;
+                }
+            }
+
+            if (activeFilters.rarity) {
+                const rarity: number = JSON.parse(card.dataset.rarity!);
+                if (!(rarity == activeFilters.rarity)) {
+                    shouldHide = true;
+                }
+            }
+
+            if (shouldHide) {
+                card.classList.add("hidden");
+            } else {
+                card.classList.remove("hidden");
+            }
+        });
+    }
+
+    clearFiltersButton?.addEventListener("click", clearFilter);
+
+    function clearFilter(): void {
+        const previousClass = document.documentElement.classList.value.match(/color-\d+/);
+        if (previousClass) document.documentElement.classList.remove(previousClass[0]);
+
+        activeFilters = {};
+        filterByColor!.value = "";
+        filterByType!.value = "";
+        filterByRarity!.value = "";
+        applyFilters();
+    }
+</script>
+
+<style>
+    h4 {
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+
+    .filters {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        position: relative;
+    }
+
+    .filters-select {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    select {
+        border-radius: 12px;
+        text-align: center;
+        padding: 0.75rem;
+        font-size: 1rem;
+        background: none;
+        background-color: rgba(255, 255, 255, 0.048);
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        color: #f1f1f1;
+        outline: none;
+    }
+
+    option {
+        display: block;
+        text-align: center;
+        background-color: #333333;
+    }
+
+    button {
+        cursor: pointer;
+        padding: 0.25rem;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f1f1f1;
+        transition: background-color 0.3s ease;
+        position: absolute;
+        top: 10%; 
+        right: 1rem;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+
+        svg {
+            width: 60%;
+            height: 60%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        &:hover svg {
+            transform: rotate(0.75turn);
+        }
+    }
+
+    @media (min-width: 600px) {
+        .filters {
+            padding: 1rem 2rem;
+        }
+
+        .filters-select {
+            flex-direction: row;
+            gap: 0.5rem;
+        }
+    }
+
+    @media (min-width: 769px) {
+        button {
+            position: relative; 
+            top: unset; 
+            right: unset; 
+            align-self: center; 
+            margin-left: 0.5rem;
+        }
+    }
+</style>

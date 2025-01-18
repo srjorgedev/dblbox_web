@@ -1,26 +1,16 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import {
-	BASE_API_URL,
-	BASE_API_ENDPOINTS,
-	ELE_API_URL,
-	ICO_API_URL,
-	COLOR_API_URL,
-	RAR_API_URL,
-} from "../utils/API";
-import type { SummaryCharacter } from "../types/summary.formated.character";
-import { COLORS, RARITY } from "../utils/atributes";
 import RenderCard from "../components/RenderCard.astro";
+import Layout from "../layouts/Layout.astro";
+import type { SummaryCharacter } from "../types/summary.formated.character";
+import { BASE_API_ENDPOINTS, BASE_API_URL } from "../utils/API";
+import FilterSection from "../components/FilterSection.astro";
 
 async function getData() {
 	try {
-		const response = await fetch(
-			`${BASE_API_URL}${BASE_API_ENDPOINTS.all}`,
-			{
-				method: "GET",
-				redirect: "manual",
-			},
-		);
+		const response = await fetch(`${BASE_API_URL}${BASE_API_ENDPOINTS.all}`, {
+			method: "GET",
+			redirect: "manual"
+		});
 
 		if (response.status >= 300 && response.status < 400) {
 			const location = response.headers.get("Location");
@@ -41,27 +31,38 @@ const characters = await getData();
 ---
 
 <Layout Title="Personajes">
+	<FilterSection />
+
 	<section class="characters-render">
-		{
-			characters &&
-				characters.map((char: SummaryCharacter, i: number) =>  <RenderCard char={char} />)
-		}
+		{characters && characters.map((e) => <RenderCard char={e} />)}
 	</section>
 </Layout>
 
 <style>
-	a {
-		text-decoration: none;
-		color: white;
-	}
-
 	section.characters-render {
+		padding: 1rem 2rem;
 		height: inherit;
 		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 12px;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0 16px;
+	}
+
+	@media (min-width: 600px) {
+		section.characters-render {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (min-width: 1000px) {
+		section.characters-render {
+			grid-template-columns: repeat(5, 1fr);
+		}
+	}
+
+	@media (min-width: 1200px) {
+		section.characters-render {
+			grid-template-columns: repeat(6, 1fr);
+		}
 	}
 </style>

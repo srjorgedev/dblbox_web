@@ -1,0 +1,150 @@
+---
+interface Props {
+    selected: number;
+}
+
+const { selected } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <main>
+            <aside>
+                <a href="/"><h2>DBL BOX</h2></a>
+                <ul>
+                    <li class={selected == 1 ? "selected" : ""}><a href="/dashboard/">Personajes</a></li>
+                    <li class={selected == 2 ? "selected" : ""}><a href="/dashboard/equips">Equipamientos</a></li>
+                    <li class={selected == 3 ? "selected" : ""}><a href="/dashboard/users">Usuarios</a></li>
+                </ul>
+            </aside>
+            <div class="container">
+                <slot />
+            </div>
+        </main>
+    </body>
+</html>
+
+<style is:global>
+    *,
+    *::after,
+    *::before {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    html {
+        color: #181718;
+        font-size: 12px;
+        font-family:
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            "Open Sans",
+            "Helvetica Neue",
+            sans-serif;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        background-color: #f1f1f1;
+        scrollbar-gutter: auto;
+        font-size: 1.15rem;
+        overflow: hidden;
+    }
+
+    main {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-areas:
+            "sidebar content content content content content"
+            "sidebar content content content content content"
+            "sidebar content content content content content";
+    }
+
+    aside,
+    .container {
+        padding: 2rem 2.5rem;
+    }
+
+    aside {
+        color: #f1f1f1;
+        grid-area: sidebar;
+        background: #181718;
+
+        a {
+            text-decoration: none;
+            color: #f1f1f1;
+
+            h2 {
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            gap: 16px;
+
+            li {
+                font-size: 1.5rem;
+                list-style-type: none;
+                padding: 0.75rem 1.5rem;
+                transition: background 0.24s ease-in-out;
+                border-radius: 1rem;
+                position: relative;
+                z-index: 2;
+
+                &.selected::before {
+                    content: "";
+                    width: 150%;
+                    height: 100%;
+                    position: absolute;
+                    background-color: rgba(255, 255, 255, 0.15);
+                    border: solid 4px rgba(255, 255, 255, 0.15);
+                    box-shadow: 2px 2px 8px rgba(255, 255, 255, 0.15);
+                    top: 0;
+                    left: -50%;
+                    z-index: -1;
+                    border-radius: 0 1rem 1rem 0;
+                }
+
+                &:not(.selected):hover {
+                    background: #f1f1f1;
+                    a {
+                        color: #181718;
+                    }
+                }
+
+                a {
+                    color: #f1f1f1;
+                    text-decoration: none;
+                    transition: color 0.24s ease-in-out;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .container {
+        grid-area: content;
+    }
+</style>
