@@ -192,9 +192,8 @@ import Reset from "./svg/Reset.astro";
 
     button {
         cursor: pointer;
-        padding: 0.25rem;
         aspect-ratio: 1;
-        border-radius: 12px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -202,15 +201,15 @@ import Reset from "./svg/Reset.astro";
         transition: background-color 0.3s ease;
         position: absolute;
         top: 10%;
-        right: 1rem;
+        right: 2.5rem;
 
         &:hover {
             background-color: #e0e0e0;
         }
 
         svg {
-            width: 60%;
-            height: 60%;
+            width: 50%;
+            height: 50%;
             object-fit: cover;
             transition: transform 0.3s ease-in-out;
         }
@@ -238,6 +237,13 @@ import Reset from "./svg/Reset.astro";
             right: unset;
             align-self: center;
             margin-left: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 12px;
+
+            svg {
+                width: 70%;
+                height: 70%;
+            }
         }
     }
 </style>
