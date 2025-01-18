@@ -170,6 +170,7 @@ import Reset from "./svg/Reset.astro";
     }
 
     select {
+        max-width: 7rem;
         border-radius: 12px;
         text-align: center;
         padding: 0.75rem;
@@ -182,6 +183,9 @@ import Reset from "./svg/Reset.astro";
         transition:
             background 0.15s ease-in-out,
             border 0.15s ease-in-out;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     option {

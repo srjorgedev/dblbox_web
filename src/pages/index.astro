@@ -1,33 +1,9 @@
 ---
-import RenderCard from "../components/RenderCard.astro";
-import Layout from "../layouts/Layout.astro";
-import type { SummaryCharacter } from "../types/summary.formated.character";
-import { BASE_API_ENDPOINTS, BASE_API_URL } from "../utils/API";
 import FilterSection from "../components/FilterSection.astro";
+import Layout from "../layouts/Layout.astro";
+import { getSummaryCharacters } from "../services/getData";
 
-async function getData() {
-	try {
-		const response = await fetch(`${BASE_API_URL}${BASE_API_ENDPOINTS.all}`, {
-			method: "GET",
-			redirect: "manual"
-		});
-
-		if (response.status >= 300 && response.status < 400) {
-			const location = response.headers.get("Location");
-			throw new Error(`Redirection detected: ${location}`);
-		}
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		const json: SummaryCharacter[] = await response.json();
-		return json;
-	} catch (error) {
-		console.error("Fetch error:", error);
-	}
-}
-const characters = await getData();
+const characters = await getSummaryCharacters();
 ---
 
 <Layout Title="Personajes">
