@@ -119,6 +119,37 @@ import Reset from "./svg/Reset.astro";
 </script>
 
 <style>
+    html.color-1 {
+        select {
+            background-color: rgba(255, 0, 0, 0.048);
+            border: 2px solid rgba(255, 0, 0, 0.28);
+        }
+    }
+    html.color-2 {
+        select {
+            background-color: rgba(255, 255, 0, 0.048);
+            border: 2px solid rgba(255, 255, 0, 0.28);
+        }
+    }
+    html.color-3 {
+        select {
+            background-color: rgba(98, 0, 255, 0.048);
+            border: 2px solid rgba(98, 0, 255, 0.28);
+        }
+    }
+    html.color-4 {
+        select {
+            background-color: rgba(21, 255, 0, 0.048);
+            border: 2px solid rgba(21, 255, 0, 0.28);
+        }
+    }
+    html.color-5 {
+        select {
+            background-color: rgba(0, 204, 255, 0.048);
+            border: 2px solid rgba(0, 204, 255, 0.28);
+        }
+    }
+
     h4 {
         font-weight: 600;
         font-size: 1.25rem;
@@ -148,6 +179,9 @@ import Reset from "./svg/Reset.astro";
         border: 2px solid rgba(255, 255, 255, 0.28);
         color: #f1f1f1;
         outline: none;
+        transition:
+            background 0.15s ease-in-out,
+            border 0.15s ease-in-out;
     }
 
     option {
@@ -167,7 +201,7 @@ import Reset from "./svg/Reset.astro";
         background-color: #f1f1f1;
         transition: background-color 0.3s ease;
         position: absolute;
-        top: 10%; 
+        top: 10%;
         right: 1rem;
 
         &:hover {
@@ -199,10 +233,10 @@ import Reset from "./svg/Reset.astro";
 
     @media (min-width: 769px) {
         button {
-            position: relative; 
-            top: unset; 
-            right: unset; 
-            align-self: center; 
+            position: relative;
+            top: unset;
+            right: unset;
+            align-self: center;
             margin-left: 0.5rem;
         }
     }
