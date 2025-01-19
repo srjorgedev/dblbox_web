@@ -16,13 +16,13 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
 console.log(abilities.main)
 ---
 
-<article class="character-ability main st on">
+<article class="ability main st on">
     <h3>{abilities.main[0][0]}</h3>
     <pre>{abilities.main[0][1]}</pre>
 </article>
 {
     (character.transformable || character.switch) && (
-        <article class="character-ability main nd off">
+        <article class="ability main nd off">
             <h3>{abilities.main[1][0]}</h3>
             <pre>{abilities.main[1][1]}</pre>
         </article>
@@ -30,7 +30,7 @@ console.log(abilities.main)
 }
 {
     (character.switch && character.fusion) && (
-        <article class="character-ability main rd off">
+        <article class="ability main rd off">
             <h3>{abilities.main[2][0]}</h3>
             <pre>{abilities.main[2][1]}</pre>
         </article>
@@ -38,7 +38,7 @@ console.log(abilities.main)
 }
 {
     zenkaiAbilities && character.zenkai && (
-        <article class="character-ability main st-zenkai off">
+        <article class="ability main st-zenkai off">
             <h3>{zenkaiAbilities.main[0][0]}</h3>
             <pre>{zenkaiAbilities.main[0][1]}</pre>
         </article>
@@ -48,7 +48,7 @@ console.log(abilities.main)
     (character.transformable || character.switch) &&
         zenkaiAbilities &&
         character.zenkai && (
-            <article class="character-ability main nd-zenkai off">
+            <article class="ability main nd-zenkai off">
                 <h3>{zenkaiAbilities.main[1][0]}</h3>
                 <pre>{zenkaiAbilities.main[1][1]}</pre>
             </article>

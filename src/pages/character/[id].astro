@@ -47,6 +47,17 @@ const rarity = RARITY_BIG[character.rarity._id];
                 <h2>{character.name}</h2>
             </article>
         </section>
+        {
+            character.abilities.ultra && (
+                <section class="character-ability">
+                    <h2>Habilidad ULTRA</h2>
+                    <article class="ability ultra">
+                        <h3>{character.abilities.ultra[0][0]}</h3>
+                        <pre>{character.abilities.ultra[0][1]}</pre>
+                    </article>
+                </section>
+            )
+        }
         <section class="character-ability">
             <h2>Habilidad principal</h2>
             <RenderMain
@@ -73,15 +84,56 @@ const rarity = RARITY_BIG[character.rarity._id];
                 }}
             />
         </section>
+        <section class="character-ability">
+            <h2>Habilidad Z</h2>
+            <article class="ability">
+                <section class="button-tab">
+                    <input class="z-button" type="button" value="I" />
+                    <input class="z-button" type="button" value="II" />
+                    <input class="z-button" type="button" value="III" />
+                    <input class="z-button" type="button" value="IV" />
+                </section>
+
+                {character.abilities.zAbility.map((a, i) => <pre class={`z z-${i}`}>{a}</pre>)}
+            </article>
+        </section>
     </div>
 </Layout>
 
 <script>
+    import {
+        setToggleOff,
+        isOff,
+        isOn,
+        setToggleOn,
+        setToggleSelectedOff,
+        setToggleSelectedOn,
+        toggleOffList,
+        toggleOnList,
+        toggleSelectedOffList
+    } from "../../utils/characters_page.functions";
+
     const ndZenkai = document.querySelectorAll(".nd-zenkai");
     const stZenkai = document.querySelectorAll(".st-zenkai");
     const st = document.querySelectorAll(".st");
     const nd = document.querySelectorAll(".nd");
     const rd = document.querySelectorAll(".rd");
+
+    const zAbility = document.querySelectorAll(".z");
+    const zAbilityButton = document.querySelectorAll<HTMLInputElement>(".z-button");
+
+    toggleOffList(zAbility);
+    setToggleOn(zAbility[0] as HTMLElement);
+    setToggleSelectedOn(zAbilityButton[0]);
+
+    zAbilityButton.forEach((button, i) => {
+        button.addEventListener("click", (e: MouseEvent) => {
+            toggleOffList(zAbility);
+            toggleSelectedOffList(zAbilityButton);
+            setToggleSelectedOn(button);
+            setToggleOn(zAbility[i] as HTMLElement);
+        });
+    });
 
     const zenkaiToggle = document.querySelector<HTMLDivElement>(".zenkai-toggle");
     const transformToggle = document.querySelector<HTMLDivElement>(".transform-toggle");
@@ -194,42 +246,6 @@ const rarity = RARITY_BIG[character.rarity._id];
             setToggleOff(target);
         }
     }
-
-    function toggleOffList(elements: NodeListOf<Element>): void {
-        elements.forEach((element) => {
-            if (element.classList.contains("on")) {
-                element.classList.remove("on");
-            }
-            element.classList.add("off");
-        });
-    }
-
-    function toggleOnList(elements: NodeListOf<Element>): void {
-        elements.forEach((element) => {
-            if (element.classList.contains("off")) {
-                element.classList.remove("off");
-            }
-            element.classList.add("on");
-        });
-    }
-
-    function setToggleOn(target: HTMLElement): void {
-        target.classList.remove("off");
-        target.classList.add("on");
-    }
-
-    function setToggleOff(target: HTMLElement): void {
-        target.classList.remove("on");
-        target.classList.add("off");
-    }
-
-    function isOn(element: HTMLElement | null): boolean {
-        return element?.classList.contains("on") ?? false;
-    }
-
-    function isOff(element: HTMLElement | null): boolean {
-        return !isOn(element);
-    }
 </script>
 
 <style is:global>
@@ -239,26 +255,49 @@ const rarity = RARITY_BIG[character.rarity._id];
 
     .character {
         width: 100%;
+        padding-bottom: 2rem;
 
         section.character-ability {
             h2 {
                 font-size: 1.25rem;
                 margin: 0 var(--br);
+                margin-bottom: 0.25rem;
             }
 
-            article:not(article.text) {
+            article.ability {
                 padding: 0 var(--br);
 
                 h3 {
-                    margin: 0.5rem 0;
-                    font-size: 1.25rem;
-                    font-weight: normal;
+                    margin: 0 0 0.25rem 0;
+                    font-size: 1rem;
+                    font-weight: 600;
                     color: #e2e2e2;
                 }
                 pre {
-                    margin-bottom: 1.5rem;
-                    font-size: 1rem;
+                    margin-bottom: 1rem;
+                    font-size: 0.75rem;
                     color: #dbdbdb;
+                }
+
+                section.button-tab {
+                    width: 100%;
+                    margin-bottom: 0.5rem;
+
+                    input[type="button"] {
+                        padding: 0.5rem 0.75rem;
+                        text-align: center;
+                        font-weight: 600;
+                        transition:
+                            background 0.26s ease-in-out,
+                            color 0.22s ease-in-out;
+                        background-color: rgb(66, 66, 66);
+                        color: #f1f1f1;
+
+                        &.selected {
+                            background: #d2b615;
+                            color: var(--bg-main);
+                        }
+                    }
                 }
             }
         }
@@ -312,7 +351,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                 align-items: center;
 
                 .button {
-                    width: 75%;
+                    width: 60%;
                     max-width: 72px;
                     aspect-ratio: 1;
                     height: auto;
@@ -350,7 +389,8 @@ const rarity = RARITY_BIG[character.rarity._id];
                 .character-element {
                     top: -75%;
                     left: -8px;
-                    width: 15%;
+                    width: 30%;
+                    min-width: 40px;
                 }
 
                 h2 {
