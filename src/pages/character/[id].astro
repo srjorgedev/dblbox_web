@@ -14,7 +14,7 @@ import { getCharacter } from "../../services/getData";
 
 const { id } = Astro.params;
 
-const character: FormatedCharacter = await getCharacter(parseInt(id!));
+const character = await getCharacter(parseInt(id!));
 const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
 
 const color = COLORS[character.color[0]._id];
@@ -260,7 +260,6 @@ const rarity = RARITY_BIG[character.rarity._id];
             display: flex;
             position: relative;
             outline: 1px solid;
-            border-radius: var(--br);
 
             .bchacut {
                 width: 100%;
@@ -387,5 +386,11 @@ const rarity = RARITY_BIG[character.rarity._id];
 
     .on {
         display: block;
+    }
+
+    @media (min-width: 769px) {
+        .character-banner {
+            border-radius: 1.5rem;
+        }
     }
 </style>
