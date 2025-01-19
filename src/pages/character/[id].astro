@@ -47,8 +47,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                 <h2>{character.name}</h2>
             </article>
         </section>
-
-        <section>
+        <section class="character-ability">
             <h2>Habilidad principal</h2>
             <RenderMain
                 abilities={abilities}
@@ -61,8 +60,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                 }}
             />
         </section>
-
-        <section>
+        <section class="character-ability">
             <h2>Habilidades unicas</h2>
             <RenderUniques
                 abilities={abilities}
@@ -242,28 +240,40 @@ const rarity = RARITY_BIG[character.rarity._id];
     .character {
         width: 100%;
 
-        & article:not(article.text) {
-            padding: 0 var(--br);
-
-            h3 {
-                margin: 0.5rem 0;
-                font-size: 1.5rem;
-                font-weight: bold;
+        section.character-ability {
+            h2 {
+                font-size: 1.25rem;
+                margin: 0 var(--br);
             }
-            pre {
-                margin-bottom: 1.5rem;
-                font-size: 1.125rem;
+
+            article:not(article.text) {
+                padding: 0 var(--br);
+
+                h3 {
+                    margin: 0.5rem 0;
+                    font-size: 1.25rem;
+                    font-weight: normal;
+                    color: #e2e2e2;
+                }
+                pre {
+                    margin-bottom: 1.5rem;
+                    font-size: 1rem;
+                    color: #dbdbdb;
+                }
             }
         }
 
         .character-banner {
+            height: 10rem;
             display: flex;
             position: relative;
             outline: 1px solid;
+            margin-bottom: 1rem;
 
             .bchacut {
                 width: 100%;
                 aspect-ratio: 4/1;
+                object-fit: cover;
             }
 
             img:not(img.bchacut),
@@ -281,19 +291,19 @@ const rarity = RARITY_BIG[character.rarity._id];
                 .character-rarity {
                     position: relative;
                     aspect-ratio: 512/128;
-                    width: 60%;
+                    width: 40%;
+                    left: var(--br);
                 }
 
                 .lf {
                     position: relative;
-                    width: 40%;
-                    left: 50%;
-                    transform: translateX(-100%);
+                    width: 30%;
+                    left: 7.5%;
                 }
             }
 
             .buttons {
-                right: var(--br);
+                right: 4px;
                 top: 50%;
                 transform: translateY(-50%);
                 display: flex;
@@ -302,6 +312,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                 align-items: center;
 
                 .button {
+                    width: 75%;
                     max-width: 72px;
                     aspect-ratio: 1;
                     height: auto;
@@ -337,15 +348,19 @@ const rarity = RARITY_BIG[character.rarity._id];
                 line-height: 1.1;
 
                 .character-element {
-                    top: -100%;
-                    left: -16px;
+                    top: -75%;
+                    left: -8px;
+                    width: 15%;
                 }
 
                 h2 {
-                    font-size: 2rem;
+                    font-size: 1.25rem;
+                    line-height: 1;
                 }
                 h3 {
-                    font-size: 1.5rem;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    line-height: 1;
                 }
             }
 
