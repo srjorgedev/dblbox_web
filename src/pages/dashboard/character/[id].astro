@@ -1,0 +1,15 @@
+---
+import DashLayout from "../../../layouts/DashLayout.astro";
+import { getCharacter } from "../../../services/getData";
+import { RARITY, COLORS, RARITY_BIG } from "../../../utils/atributes";
+const { id } = Astro.params;
+
+const character = await getCharacter(parseInt(id!));
+const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
+
+const color = COLORS[character.color[0]._id];
+const rar = RARITY[character.rarity._id];
+const rarity = RARITY_BIG[character.rarity._id];
+---
+
+<DashLayout selected={1} />

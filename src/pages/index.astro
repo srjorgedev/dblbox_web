@@ -2,6 +2,7 @@
 import FilterSection from "../components/FilterSection.astro";
 import Layout from "../layouts/Layout.astro";
 import { getSummaryCharacters } from "../services/getData";
+import RenderCard from "../components/RenderCard.astro";
 
 const characters = await getSummaryCharacters();
 ---
@@ -9,9 +10,9 @@ const characters = await getSummaryCharacters();
 <Layout Title="Personajes">
 	<FilterSection />
 
-	<!-- <section class="characters-render">
+	<section class="characters-render">
 		{characters && characters.map((e) => <RenderCard char={e} />)}
-	</section> -->
+	</section>
 </Layout>
 
 <style>

@@ -1,0 +1,66 @@
+---
+import type { SummaryCharacter } from "../../types/summary.formated.character";
+import Edit from "../svg/Edit.astro";
+import { COLORS, RARITY } from "../../utils/atributes";
+
+interface Props {
+    characters: SummaryCharacter[];
+}
+const { characters } = Astro.props;
+---
+
+<tbody>
+    {
+        characters &&
+            characters.map((char) => {
+                return (
+                    <tr
+                        class="character-information"
+                        data-color={`[${char.color[0]._id}${char.color.length > 1 ? "," + char.color[1]._id : ""}]`}
+                        data-rarity={char.rarity._id}
+                        data-tags={`[${char.tags.map((item) => item._id).join(",")}]`}
+                        data-chapter={char.chapter._id}
+                        data-type={char.type._id}
+                        data-name={char.name}
+                        data-zenkai={char.zenkai}
+                        data-switch={char.switch}
+                        data-transformable={char.transformable}
+                        data-ll={char.lf}
+                    >
+                        <th scope="row">{char._id}</th>
+                        <td>{char.num}</td>
+                        <td class="character-name">{char.name}</td>
+                        <td class="tag-container">
+                            <span class={`${COLORS[char.color[0]._id]} tag`}>{char.color[0].tag}</span>
+                            {char.color.length > 1 && <span class={`${COLORS[char.color[1]._id]} tag`}>{char.color[1].tag}</span>}
+                        </td>
+                        <td>Tipo {char.type.tag}</td>
+                        <td class="chapter">{char.chapter.tag}</td>
+                        <td class="tag-container">
+                            {char.tags?.length > 0 ? (
+                                <>
+                                    <span class="tag" title={char.tags[0]?.tag}>
+                                        {char.tags[0]?.tag || "No tag"}
+                                    </span>
+                                    {char.tags.length > 1 && <span class="tag">+{char.tags.length - 1}</span>}
+                                </>
+                            ) : (
+                                <span>No tags available</span>
+                            )}
+                        </td>
+                        <td>{RARITY[char.rarity._id]}</td>
+                        <td>{char.lf ? "SI" : "NO"}</td>
+                        <td>{char.transformable ? "SI" : "NO"}</td>
+                        <td>{char.switch ? "SI" : "NO"}</td>
+                        <td>{char.fusion ? "SI" : "NO"}</td>
+                        <td>{char.zenkai ? "SI" : "NO"}</td>
+                        <td>
+                            <a href={`/dashboard/character/${char.num}`}>
+                                <Edit />
+                            </a>
+                        </td>
+                    </tr>
+                );
+            })
+    }
+</tbody>

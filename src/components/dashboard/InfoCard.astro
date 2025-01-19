@@ -1,0 +1,108 @@
+---
+interface Props {
+    Title: string;
+    Amount: number;
+}
+
+const { Title, Amount } = Astro.props;
+---
+
+<article class="stat-card">
+    <main class="stat-content">
+        <h3 class="stat-title">{Title}</h3>
+        <h2 class="stat-value">{Amount}</h2>
+    </main>
+</article>
+
+<style>
+    .stat-card {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--bg-nd-005);
+        border: 2px solid var(--bg-nd-01);
+        border-radius: 1rem;
+        padding: 1.25rem;
+        transition: all 0.16s ease-in-out;
+        cursor: default;
+        user-select: none;
+        position: relative;
+        overflow: hidden;
+        background-color: rgba(234, 234, 234, 0.5);
+        border: 1px solid rgb(219, 219, 219);
+        color: rgb(131, 131, 131);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--bg-nd-05);
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1);
+    }
+
+    .stat-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, transparent 0%, transparent 50%, var(--bg-nd-01) 100%);
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        pointer-events: none;
+    }
+
+    .stat-card:hover::after {
+        opacity: 1;
+    }
+
+    .stat-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .stat-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: rgb(131, 131, 131);
+        letter-spacing: normal;
+        text-transform: uppercase;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--bg-nd);
+        letter-spacing: normal;
+        display: inline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .stat-card {
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .stat-card {
+            border-width: 3px;
+        }
+
+        .stat-title {
+            color: var(--bg-main);
+        }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .stat-card {
+            transition: none;
+        }
+
+        .stat-card:hover {
+            transform: none;
+        }
+    }
+</style>
