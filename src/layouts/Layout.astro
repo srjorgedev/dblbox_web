@@ -4,17 +4,18 @@ import Footer from "../components/Footer.astro";
 
 interface Props {
 	Title: string;
+	ICO: string;
 }
 
-const { Title } = Astro.props;
+const { Title, ICO } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/*" href={ICO == "default" ? "/rarity/UL.webp" : ICO} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{Title}</title>
 	</head>
@@ -80,6 +81,12 @@ const { Title } = Astro.props;
 	@media (min-width: 769px) {
 		main.layout {
 			max-width: calc(100% - 2rem);
+		}
+	}
+
+	@media (min-width: 1080px) {
+		main.layout {
+			max-width: 1024px;
 		}
 	}
 

@@ -18,7 +18,7 @@ const rar = RARITY[char.rarity._id];
     class="character-card"
     data-color={`[${char.color[0]._id}${char.color.length > 1 ? "," + char.color[1]._id : ""}]`}
     data-rarity={char.rarity._id}
-    data-tags={`[${char.tags.map(item => item._id).join(",")}]`}
+    data-tags={`[${char.tags.map((item) => item._id).join(",")}]`}
     data-chapter={char.chapter._id}
     data-type={char.type._id}
     data-name={char.name}
@@ -28,20 +28,8 @@ const rar = RARITY[char.rarity._id];
     data-ll={char.lf}
 >
     <article class={`card ${char._id}`}>
-        <img
-            class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`}
-            src={`${ICO_API_URL}${char.num}.webp`}
-            alt=""
-        />
-        {
-            (char.transformable || char.switch) && (
-                <img
-                    class="card-bchaico nd"
-                    src={`${ICO_API_URL}${char.num}2.webp`}
-                    alt=""
-                />
-            )
-        }
+        <img class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`} src={`${ICO_API_URL}${char.num}.webp`} alt="" />
+        {(char.transformable || char.switch) && <img class="card-bchaico nd" src={`${ICO_API_URL}${char.num}2.webp`} alt="" />}
         <!-- {
             char.fusion && (
                 <img
@@ -55,11 +43,7 @@ const rar = RARITY[char.rarity._id];
         <img class="card-element" src={`/element/${color}1.webp`} alt="" />
         <img class="card-rarity" src={`/rarity/${rar}.webp`} alt="" />
         {char.lf && <img class="card-ll" src={`/props/LL.webp`} alt="" />}
-        {
-            char.zenkai && (
-                <img class="card-zenkai" src={`/props/ZENKAI.webp`} alt="" />
-            )
-        }
+        {char.zenkai && <img class="card-zenkai" src={`/props/ZENKAI.webp`} alt="" />}
     </article>
 </a>
 
@@ -71,6 +55,9 @@ const rar = RARITY[char.rarity._id];
         width: 100%;
         position: relative;
         transition: 0.2s ease-in-out transform;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
 
         &:hover {
             transform: scale(1.01);

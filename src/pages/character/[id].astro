@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { CUT_API_URL, BASE_API_ENDPOINTS, BASE_API_URL } from "../../utils/API";
+import { CUT_API_URL, BASE_API_ENDPOINTS, BASE_API_URL, ICO_API_URL } from "../../utils/API";
 import type { FormatedCharacter, Tag } from "../../types/formated.character";
 import { COLORS, RARITY, RARITY_BIG } from "../../utils/atributes";
 import RenderArt from "../../components/character/RenderArt.astro";
@@ -23,8 +23,8 @@ const rar = RARITY[character.rarity._id];
 const rarity = RARITY_BIG[character.rarity._id];
 ---
 
-<Layout Title={`${character._id} - ${character.name}`}>
-    <div class={`character`}>
+<Layout ICO={`${ICO_API_URL}${id}.webp`} Title={`${character._id} - ${character.name}`}>
+    <div class={`character ${color}`}>
         <section class={`character-banner ${color}`} data-stage="first">
             <img class="bchacut st on" src={`${CUT_API_URL}${id}.webp`} alt="" />
             {(character.transformable || character.switch) && <img class="bchacut nd off" src={`${CUT_API_URL}${id}2.webp`} />}
@@ -335,6 +335,72 @@ const rarity = RARITY_BIG[character.rarity._id];
     .character {
         width: 100%;
 
+        &.RED {
+            section.character-ability {
+                article.ability {
+                    input[type="button"].selected,
+                    pre.z,
+                    pre.zenkai-ability,
+                    pre.z-limited {
+                        background-color: rgba(255, 0, 0, 0.048);
+                        outline: 1px solid rgba(255, 0, 0, 0.28);
+                    }
+                }
+            }
+        }
+        &.YEL {
+            section.character-ability {
+                article.ability {
+                    input[type="button"].selected,
+                    pre.z,
+                    pre.zenkai-ability,
+                    pre.z-limited {
+                        background-color: rgba(255, 255, 0, 0.048);
+                        outline: 1px solid rgba(255, 255, 0, 0.28);
+                    }
+                }
+            }
+        }
+        &.PUR {
+            section.character-ability {
+                article.ability {
+                    input[type="button"].selected,
+                    pre.z,
+                    pre.zenkai-ability,
+                    pre.z-limited {
+                        background-color: rgba(98, 0, 255, 0.048);
+                        outline: 1px solid rgba(98, 0, 255, 0.28);
+                    }
+                }
+            }
+        }
+        &.GRN {
+            section.character-ability {
+                article.ability {
+                    input[type="button"].selected,
+                    pre.z,
+                    pre.zenkai-ability,
+                    pre.z-limited {
+                        background-color: rgba(21, 255, 0, 0.048);
+                        outline: 1px solid rgba(21, 255, 0, 0.28);
+                    }
+                }
+            }
+        }
+        &.GRN {
+            section.character-ability {
+                article.ability {
+                    input[type="button"].selected,
+                    pre.z,
+                    pre.zenkai-ability,
+                    pre.z-limited {
+                        background-color: rgba(0, 204, 255, 0.048);
+                        outline: 1px solid rgba(0, 204, 255, 0.28);
+                    }
+                }
+            }
+        }
+
         section.character-ability {
             h2 {
                 font-size: 1.25rem;
@@ -359,9 +425,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                     &.z-limited,
                     &.zenkai-ability {
                         padding: 0.5rem;
-                        background: #d2b61519;
                         border-radius: 0.25rem;
-                        border: 2px solid #d2b61529;
                     }
                 }
 
@@ -378,11 +442,6 @@ const rarity = RARITY_BIG[character.rarity._id];
                             color 0.22s ease-in-out;
                         background-color: rgb(66, 66, 66);
                         color: #f1f1f1;
-
-                        &.selected {
-                            background: #d2b615;
-                            color: var(--bg-main);
-                        }
                     }
                 }
             }
@@ -466,9 +525,13 @@ const rarity = RARITY_BIG[character.rarity._id];
                 line-height: 1.1;
 
                 .character-element {
+                    display: block;
                     position: relative;
-                    left: -16px;
-                    width: 20%;
+                    left: -8px;
+                    top: -8px;
+                    width: 10vw;
+                    height: auto;
+                    aspect-ratio: 96/52;
                 }
 
                 h2 {
@@ -544,6 +607,8 @@ const rarity = RARITY_BIG[character.rarity._id];
                 aspect-ratio: 4/1;
 
                 .bchacut {
+                    width: 100%;
+                    aspect-ratio: 4/1;
                     object-fit: contain;
                 }
 
@@ -562,7 +627,9 @@ const rarity = RARITY_BIG[character.rarity._id];
                     line-height: 1;
 
                     .character-element {
-                        left: -24px;
+                        left: -4px;
+                        top: 0;
+                        width: 4vw;
                     }
 
                     h2 {
@@ -594,6 +661,22 @@ const rarity = RARITY_BIG[character.rarity._id];
                         input[type="button"] {
                             font-size: 1rem;
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .character {
+            .character-banner {
+                article.text {
+                    line-height: 1;
+
+                    .character-element {
+                        left: -12px;
+                        top: -4px;
+                        width: 4vw;
                     }
                 }
             }
