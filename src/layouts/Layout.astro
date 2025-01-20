@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
 	Title: string;
@@ -23,6 +24,7 @@ const { Title, ICO } = Astro.props;
 		<main class="layout">
 			<Header />
 			<slot />
+			<Analytics />
 			<Footer />
 		</main>
 	</body>

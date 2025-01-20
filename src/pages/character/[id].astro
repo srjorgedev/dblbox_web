@@ -16,7 +16,6 @@ const { id } = Astro.params;
 
 const character = await getCharacter(parseInt(id!));
 const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
-console.log(zenkaiAbilities?.zenkaiAbility);
 
 const color = COLORS[character.color[0]._id];
 const rar = RARITY[character.rarity._id];
