@@ -387,7 +387,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                 }
             }
         }
-        &.GRN {
+        &.BLU {
             section.character-ability {
                 article.ability {
                     input[type="button"].selected,
@@ -430,11 +430,13 @@ const rarity = RARITY_BIG[character.rarity._id];
                 }
 
                 section.button-tab {
+                    display: flex;
                     width: 100%;
-                    margin-bottom: 0.5rem;
+                    margin: 0.5rem 0 0.75rem 0;
+                    gap: 0.5rem;
 
                     input[type="button"] {
-                        padding: 0.5rem 0.75rem;
+                        padding: 0.5rem 1rem;
                         text-align: center;
                         font-weight: 600;
                         transition:
@@ -442,6 +444,8 @@ const rarity = RARITY_BIG[character.rarity._id];
                             color 0.22s ease-in-out;
                         background-color: rgb(66, 66, 66);
                         color: #f1f1f1;
+                        cursor: pointer;
+                        border-radius: 0.25rem;
                     }
                 }
             }
@@ -620,6 +624,14 @@ const rarity = RARITY_BIG[character.rarity._id];
                     .lf {
                         width: 30%;
                         left: 12.5%;
+                    }
+                }
+
+                .buttons {
+                    right: 16px;
+
+                    .button {
+                        width: 100%;
                     }
                 }
 
