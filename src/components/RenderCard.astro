@@ -28,8 +28,18 @@ const rar = RARITY[char.rarity._id];
     data-ll={char.lf}
 >
     <article class={`card ${char._id}`}>
-        <img class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`} src={`${ICO_API_URL}${char.num}.webp`} alt="" />
-        {(char.transformable || char.switch) && <img class="card-bchaico nd" src={`${ICO_API_URL}${char.num}2.webp`} alt="" />}
+        <img
+            decoding="async"
+            loading="lazy"
+            class={`card-bchaico st ${char.transformable || char.switch ? "fade" : ""}`}
+            src={`${ICO_API_URL}${char.num}.webp`}
+            alt=""
+        />
+        {
+            (char.transformable || char.switch) && (
+                <img decoding="async" loading="lazy" class="card-bchaico nd" src={`${ICO_API_URL}${char.num}2.webp`} alt="" />
+            )
+        }
         <!-- {
             char.fusion && (
                 <img
@@ -39,11 +49,11 @@ const rar = RARITY[char.rarity._id];
                 />
             )
         } -->
-        <img class="card-color" src={`/color/${color}.webp`} alt="" />
-        <img class="card-element" src={`/element/${color}1.webp`} alt="" />
-        <img class="card-rarity" src={`/rarity/${rar}.webp`} alt="" />
-        {char.lf && <img class="card-ll" src={`/props/LL.webp`} alt="" />}
-        {char.zenkai && <img class="card-zenkai" src={`/props/ZENKAI.webp`} alt="" />}
+        <img decoding="async" loading="lazy" class="card-color" src={`/color/${color}.webp`} alt="" />
+        <img decoding="async" loading="lazy" class="card-element" src={`/element/${color}1.webp`} alt="" />
+        <img decoding="async" loading="lazy" class="card-rarity" src={`/rarity/${rar}.webp`} alt="" />
+        {char.lf && <img decoding="async" loading="lazy" class="card-ll" src={`/props/LL.webp`} alt="" />}
+        {char.zenkai && <img decoding="async" loading="lazy" class="card-zenkai" src={`/props/ZENKAI.webp`} alt="" />}
     </article>
 </a>
 
