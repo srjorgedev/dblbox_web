@@ -134,6 +134,7 @@ import Reset from "./svg/Reset.astro";
         if (previousClass) document.documentElement.classList.remove(previousClass[0]);
 
         activeFilters = {};
+        filterIsLL!.value = "";
         filterByColor!.value = "";
         filterByType!.value = "";
         filterByRarity!.value = "";
