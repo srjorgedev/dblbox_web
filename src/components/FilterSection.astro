@@ -29,6 +29,11 @@ import Reset from "./svg/Reset.astro";
             <option value="3">SPARKING</option>
             <option value="4">ULTRA</option>
         </select>
+        <select class="filter-ll">
+            <option selected hidden value="">Legends Limited</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+        </select>
         <button class="clear-filters">
             <Reset />
         </button>
@@ -42,7 +47,18 @@ import Reset from "./svg/Reset.astro";
     const filterByType = document.querySelector<HTMLSelectElement>("select.filter-type");
     const filterByRarity = document.querySelector<HTMLSelectElement>("select.filter-rarity");
 
-    let activeFilters: { color?: number; type?: number; rarity?: number } = {};
+    const filterIsLL = document.querySelector<HTMLSelectElement>(".filter-ll");
+
+    let activeFilters: { color?: number; type?: number; rarity?: number; ll?: boolean } = {};
+
+    filterIsLL?.addEventListener("change", (e) => {
+        const selectedValue = (e.currentTarget as HTMLSelectElement).value;
+
+        if (selectedValue == "true") activeFilters.ll = true;
+        if (selectedValue == "false") activeFilters.ll = false;
+
+        applyFilters();
+    });
 
     filterByColor?.addEventListener("change", (e) => {
         const selectedValue = parseInt((e.currentTarget as HTMLSelectElement).value);
@@ -92,6 +108,13 @@ import Reset from "./svg/Reset.astro";
             if (activeFilters.rarity) {
                 const rarity: number = JSON.parse(card.dataset.rarity!);
                 if (!(rarity == activeFilters.rarity)) {
+                    shouldHide = true;
+                }
+            }
+
+            if (activeFilters.ll !== undefined) {
+                const ll = JSON.parse(card.dataset.ll!) as boolean;
+                if (ll !== activeFilters.ll) {
                     shouldHide = true;
                 }
             }
