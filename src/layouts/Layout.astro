@@ -19,7 +19,12 @@ const { Title, ICO } = Astro.props;
 		<link rel="icon" type="image/*" href={ICO == "default" ? "/rarity/UL.webp" : ICO} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{Title}</title>
-		<meta name="google-adsense-account" content="ca-pub-7780837724792452">
+		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
+		<link rel="canonical" href="https://www.dbl-box.com/" />
+		<meta
+			name="description"
+			content="DBL BOX es tu fuente definitiva para todo sobre Dragon Ball Legends. Encuentra información detallada de personajes, habilidades, equipamientos y más, todo presentado de manera clara y accesible. Además, disfruta de herramientas como una calculadora de rangos y un Tiermaker para clasificar a tus personajes favoritos de forma fácil y divertida."
+		/>
 	</head>
 	<body>
 		<main class="layout">
@@ -46,7 +51,7 @@ const { Title, ICO } = Astro.props;
 	html {
 		color: #f1f1f1;
 		font-size: 12px;
-		font-family: Arial, Helvetica, sans-serif
+		font-family: Arial, Helvetica, sans-serif;
 	}
 
 	html,
