@@ -9,5 +9,9 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   output: "server",
   integrations: [react()],
-  adapter: vercel()
+  adapter: vercel({
+    isr: {
+      expiration: 60 * 60 * 24,
+    },
+  }),
 });
