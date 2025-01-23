@@ -1,7 +1,4 @@
-User-agent: *
-Disallow: /admin/   
-Disallow: /private/     
-Allow: /character/      
-Allow: /public/  
+User-agent: *    
+Allow: /
 
 Sitemap: https://www.dbl-box.com/sitemap.xml
