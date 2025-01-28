@@ -6,6 +6,11 @@ import InfoCard from "../../components/dashboard/InfoCard.astro";
 import FilterSection from "../../components/dashboard/FilterSection.astro";
 import TBody from "../../components/dashboard/TBody.astro";
 
+const role = (Astro.cookies.get("role") || {})?.value;
+const token = (Astro.cookies.get("token") || {})?.value;
+
+if (!role || !token) return Astro.redirect("/auth/login");
+
 const characters = await getSummaryCharacters();
 const heroLength = characters.filter((char) => char.rarity._id === 1).length;
 const exLength = characters.filter((char) => char.rarity._id === 2).length;

@@ -1,5 +1,9 @@
 ---
 import DashLayout from "../../layouts/DashLayout.astro";
+const role = (Astro.cookies.get("role") || {})?.value;
+const token = (Astro.cookies.get("token") || {})?.value;
+
+if (!role || !token) return Astro.redirect("/auth/login");
 ---
 
 <DashLayout selected={0}>

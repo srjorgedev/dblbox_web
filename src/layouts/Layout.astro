@@ -17,7 +17,11 @@ const { Title, ICO, Cannonical } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/*" href={ICO == "default" ? "/rarity/UL.webp" : ICO} />
+		<link
+			rel="icon"
+			type="image/*"
+			href={ICO == "default" ? "https://raw.githubusercontent.com/srjorgedev/dblbox_resources/refs/heads/main/bchaico/539.webp" : ICO}
+		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>{Title}</title>
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
@@ -71,16 +75,20 @@ const { Title, ICO, Cannonical } = Astro.props;
 	html,
 	body {
 		width: 100%;
-		height: 100%;
 		background-color: var(--bg-main);
 		scrollbar-gutter: auto;
 		font-size: 1.15rem;
 	}
 
 	main.layout {
-		height: auto;
+		height: 100%;
 		margin: 0 auto;
 		position: relative;
+		width: 100%;
+
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
 	}
 
 	@media (max-width: 769px) {
