@@ -22,6 +22,8 @@ const { Title, ICO, Cannonical } = Astro.props;
 		<title>{Title}</title>
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
 		<base href="https://www.dbl-box.com/" />
+		<meta property="og:title" content={`${Title} | DBL BOX`} />
+		<meta name="twitter:title" content={`${Title} | DBL BOX`} />
 		<link rel="canonical" href={Cannonical} />
 		<meta
 			name="description"
