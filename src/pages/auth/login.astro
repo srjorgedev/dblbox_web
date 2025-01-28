@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getSession } from "../../services/getSession";
+
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const email = data.get("email");
+        const password = data.get("password");
+
+        if (!email) throw Error("email is missing");
+        if (!password) throw Error("password is missing");
+
+        const { token, role } = await getSession(email, password);
+
+        if (token && role) {
+            return Astro.redirect("/dashboard/");
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+---
+
+<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="Iniciar Sesion">
+    <h1>Iniciar sesion</h1>
+    <form method="POST">
+        <label>
+            Email:
+            <input type="email" name="email" required />
+        </label>
+        <label>
+            Password:
+            <input type="password" name="password" required minlength="6" />
+        </label>
+        <button>Submit</button>
+    </form>
+</Layout>

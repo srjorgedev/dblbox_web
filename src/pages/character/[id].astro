@@ -22,7 +22,7 @@ const rar = RARITY[character.rarity._id];
 const rarity = RARITY_BIG[character.rarity._id];
 ---
 
-<Layout ICO={`${ICO_API_URL}${id}.webp`} Title={`${character._id} - ${character.name}`}>
+<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO={`${ICO_API_URL}${id}.webp`} Title={`${character._id} - ${character.name}`}>
     <div class={`character ${color}`}>
         <section class={`character-banner ${color}`} data-stage="first">
             <img class="bchacut st on" src={`${CUT_API_URL}${id}.webp`} alt="" />
@@ -549,27 +549,27 @@ const rarity = RARITY_BIG[character.rarity._id];
             }
 
             &.PUR {
-                background-image: conic-gradient(from 0deg, #6926af 5%, #6826af4f, transparent, transparent, #6826af3f, #6926af);
-                outline-color: #6926af;
+                background-color: rgba(98, 0, 255, 0.048);
+                outline: 1px solid rgba(98, 0, 255, 0.28);
             }
 
             &.RED {
-                background-image: conic-gradient(from 0deg, #dc2121 5%, #dc21215d, transparent, transparent, #dc212146, #dc2121);
-                outline-color: #dc2121;
+                background-color: rgba(255, 0, 0, 0.048);
+                outline: 1px solid rgba(255, 0, 0, 0.28);
             }
 
             &.GRN {
-                background-image: conic-gradient(from 0deg, #16af15 5%, #15af1549, transparent, transparent, #15af153f, #16af15);
-                outline-color: #16af15;
+                background-color: rgba(21, 255, 0, 0.048);
+                outline: 1px solid rgba(21, 255, 0, 0.28);
             }
 
             &.BLU {
-                background-image: conic-gradient(from 0deg, #0c6bf2 5%, #0c6cf256, transparent, transparent, #0c6cf23d, #0c6bf2);
-                outline-color: #0c6bf2;
+                background-color: rgba(0, 204, 255, 0.048);
+                outline: 1px solid rgba(0, 204, 255, 0.28);
             }
             &.YEL {
-                background-image: conic-gradient(from 0deg, #f4e61d 5%, #f4e61d4f, transparent, transparent, #f4e61d3a, #f4e61d);
-                outline-color: #f4e61d;
+                background-color: rgba(255, 255, 0, 0.048);
+                outline: 1px solid rgba(255, 255, 0, 0.28);
             }
         }
     }

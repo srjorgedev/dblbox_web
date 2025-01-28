@@ -6,9 +6,10 @@ import Analytics from "@vercel/analytics/astro";
 interface Props {
 	Title: string;
 	ICO: string;
+	Cannonical: URL;
 }
 
-const { Title, ICO } = Astro.props;
+const { Title, ICO, Cannonical } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,7 +22,7 @@ const { Title, ICO } = Astro.props;
 		<title>{Title}</title>
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
 		<base href="https://www.dbl-box.com/" />
-		<link rel="canonical" href="https://www.dbl-box.com/" />
+		<link rel="canonical" href={Cannonical} />
 		<meta
 			name="description"
 			content="DBL BOX es tu fuente definitiva para todo sobre Dragon Ball Legends. Encuentra información detallada de personajes, habilidades, equipamientos y más, todo presentado de manera clara y accesible. Además, disfruta de herramientas como una calculadora de rangos y un Tiermaker para clasificar a tus personajes favoritos de forma fácil y divertida."
@@ -31,8 +32,11 @@ const { Title, ICO } = Astro.props;
 			content="DBL BOX, Dragon Ball Legends, DB Legends, Dragon Ball, DB Legends, Dragon Ball Legends API, Characters Dragon Ball Legends, Rank Calculator, Tiermaker DBL, BOX DBL"
 		/>
 		<link rel="sitemap" href="/sitemap.xml" />
-		<script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7780837724792452" crossorigin="anonymous"
-		></script>
+		<script
+			is:inline
+			async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7780837724792452"
+			crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<main class="layout">

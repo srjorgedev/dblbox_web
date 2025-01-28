@@ -1,0 +1,8 @@
+---
+import type { APIContext } from "astro";
+
+export async function POST(req: Request, context: APIContext) {
+    Astro.session?.destroy()
+    return Astro.redirect("/dashboard/")
+}
+---
