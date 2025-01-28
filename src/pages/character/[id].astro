@@ -44,7 +44,7 @@ const rarity = RARITY_BIG[character.rarity._id];
             <article class="text">
                 <img class="character-element" src={`/element/${color}1.webp`} alt="Afinidad del personaje" />
                 <h3>{character._id}</h3>
-                <h2>{character.name}</h2>
+                <h1>{character.name}</h1>
             </article>
         </section>
         {
@@ -121,7 +121,7 @@ const rarity = RARITY_BIG[character.rarity._id];
         {
             character.zenkaiAbilities?.zenkaiAbility && (
                 <section class="character-ability zenkai">
-                    <h2>Habilidad Z Limited</h2>
+                    <h2>Habilidad Zenkai</h2>
                     <article class="ability">
                         <section class="button-tab">
                             <input class="zenkai-ability-button" type="button" value="I" />
@@ -537,7 +537,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                     aspect-ratio: 96/52;
                 }
 
-                h2 {
+                h1 {
                     font-size: 1.25rem;
                     line-height: 1;
                 }
@@ -643,7 +643,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                         width: 4vw;
                     }
 
-                    h2 {
+                    h1 {
                         font-size: 2rem;
                         line-height: 1;
                     }
