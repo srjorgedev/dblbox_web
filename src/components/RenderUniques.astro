@@ -2,7 +2,7 @@
 import type {
     Abilities,
     ZenkaiAbilities,
-} from "../types/formated.character";
+} from "../types/formated.character.v2";
 
 interface Props {
     zenkaiAbilities: ZenkaiAbilities | null;
@@ -19,15 +19,15 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
 ---
 
 <article class="ability unique1 st on">
-    <h3>{abilities.unique1[0][0]}</h3>
-    <pre>{abilities.unique1[0][1]}</pre>
+    <h3>{abilities.unique1[0].title}</h3>
+    <pre>{abilities.unique1[0].desc}</pre>
 </article>
 
 {
     abilities.unique2 && (
         <article class="ability unique2 st on">
-            <h3>{abilities.unique2[0][0]}</h3>
-            <pre>{abilities.unique2[0][1]}</pre>
+            <h3>{abilities.unique2[0].title}</h3>
+            <pre>{abilities.unique2[0].desc}</pre>
         </article>
     )
 }
@@ -35,12 +35,12 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
 {
     (character.transformable || character.switch) && (
         <article class="ability unique1 nd off">
-            <h3>{abilities.unique1[1][0]}</h3>
-            <pre>{abilities.unique1[1][1]}</pre>
+            <h3>{abilities.unique1[1].title}</h3>
+            <pre>{abilities.unique1[1].desc}</pre>
         </article>
         <article class="ability unique2 nd off">
-            <h3>{abilities.unique2[1][0]}</h3>
-            <pre>{abilities.unique2[1][1]}</pre>
+            <h3>{abilities.unique2[1].title}</h3>
+            <pre>{abilities.unique2[1].desc}</pre>
         </article>
     )
 }
@@ -48,12 +48,12 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
 {
     (character.switch && character.fusion) && (
     <article class="ability unique1 rd off">
-            <h3>{abilities.unique1[2][0]}</h3>
-            <pre>{abilities.unique1[2][1]}</pre>
+            <h3>{abilities.unique1[2].title}</h3>
+            <pre>{abilities.unique1[2].desc}</pre>
         </article>
         <article class="ability unique2 rd off">
-            <h3>{abilities.unique2[2][0]}</h3>
-            <pre>{abilities.unique2[2][1]}</pre>
+            <h3>{abilities.unique2[2].title}</h3>
+            <pre>{abilities.unique2[2].desc}</pre>
         </article>
     )
 }
@@ -62,20 +62,20 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
     zenkaiAbilities && character.zenkai && (
         <>
             <article class="ability unique1 st-zenkai off">
-                <h3>{zenkaiAbilities.unique1[0][0]}</h3>
-                <pre>{zenkaiAbilities.unique1[0][1]}</pre>
+                <h3>{zenkaiAbilities.unique1[0].title}</h3>
+                <pre>{zenkaiAbilities.unique1[0].desc}</pre>
             </article>
             <article class="ability unique2 st-zenkai off">
-                <h3>{zenkaiAbilities.unique2[0][0]}</h3>
-                <pre>{zenkaiAbilities.unique2[0][1]}</pre>
+                <h3>{zenkaiAbilities.unique2[0].title}</h3>
+                <pre>{zenkaiAbilities.unique2[0].desc}</pre>
             </article>
             <article class="ability unique3 st-zenkai off">
-                <h3>{zenkaiAbilities.unique3[0][0]}</h3>
-                <pre>{zenkaiAbilities.unique3[0][1]}</pre>
+                <h3>{zenkaiAbilities.unique3[0].title}</h3>
+                <pre>{zenkaiAbilities.unique3[0].desc}</pre>
             </article>
             <article class="ability unique4 st-zenkai off">
-                <h3>{zenkaiAbilities.unique4[0][0]}</h3>
-                <pre>{zenkaiAbilities.unique4[0][1]}</pre>
+                <h3>{zenkaiAbilities.unique4[0].title}</h3>
+                <pre>{zenkaiAbilities.unique4[0].desc}</pre>
             </article>
         </>
     )
@@ -86,20 +86,20 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
     (character.transformable || character.switch) && (zenkaiAbilities && character.zenkai) && (
     <>
             <article class="ability unique1 nd-zenkai off">
-                <h3>{zenkaiAbilities.unique1[1][0]}</h3>
-                <pre>{zenkaiAbilities.unique1[1][1]}</pre>
+                <h3>{zenkaiAbilities.unique1[1].title}</h3>
+                <pre>{zenkaiAbilities.unique1[1].desc}</pre>
             </article>
             <article class="ability unique2 nd-zenkai off">
-                <h3>{zenkaiAbilities.unique2[1][0]}</h3>
-                <pre>{zenkaiAbilities.unique2[1][1]}</pre>
+                <h3>{zenkaiAbilities.unique2[1].title}</h3>
+                <pre>{zenkaiAbilities.unique2[1].desc}</pre>
             </article>
             <article class="ability unique3 nd-zenkai off">
-                <h3>{zenkaiAbilities.unique3[1][0]}</h3>
-                <pre>{zenkaiAbilities.unique3[1][1]}</pre>
+                <h3>{zenkaiAbilities.unique3[1].title}</h3>
+                <pre>{zenkaiAbilities.unique3[1].desc}</pre>
             </article>
             <article class="ability unique4 nd-zenkai off">
-                <h3>{zenkaiAbilities.unique4[1][0]}</h3>
-                <pre>{zenkaiAbilities.unique4[1][1]}</pre>
+                <h3>{zenkaiAbilities.unique4[1].title}</h3>
+                <pre>{zenkaiAbilities.unique4[1].desc}</pre>
             </article>
         </>
     )

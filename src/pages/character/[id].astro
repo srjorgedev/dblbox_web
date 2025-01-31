@@ -15,45 +15,45 @@ import { getCharacter } from "../../services/getData";
 const { id } = Astro.params;
 
 const character = await getCharacter(parseInt(id!));
-const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
+const { abilities, arts, zenkaiAbilities, zenkaiArts, basic } = character;
 
-const color = COLORS[character.color[0]._id];
-const rar = RARITY[character.rarity._id];
-const rarity = RARITY_BIG[character.rarity._id];
+const color = COLORS[basic.color[0]._id];
+const rar = RARITY[basic.rarity._id];
+const rarity = RARITY_BIG[basic.rarity._id];
 ---
 
-<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO={`${ICO_API_URL}${id}.webp`} Title={`${character._id} - ${character.name}`}>
+<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO={`${ICO_API_URL}${id}.webp`} Title={`${basic._id} - ${basic.name}`}>
     <div class={`character ${color}`}>
         <section class={`character-banner ${color}`} data-stage="first">
             <img class="bchacut st on" src={`${CUT_API_URL}${id}.webp`} alt="" />
-            {(character.transformable || character.switch) && <img class="bchacut nd off" src={`${CUT_API_URL}${id}2.webp`} />}
-            {(character.transformable || character.switch) && <img class="bchacut rd off" src={`${CUT_API_URL}${id}3.webp`} />}
+            {(basic.transformable || basic.switch) && <img class="bchacut nd off" src={`${CUT_API_URL}${id}2.webp`} />}
+            {(basic.transformable || basic.switch) && <img class="bchacut rd off" src={`${CUT_API_URL}${id}3.webp`} />}
 
             <article class="rarity-lf">
                 <img class="character-rarity" src={`/rarity/${rarity}.webp`} alt="Rareza del personaje" />
-                {character.lf && <img class="lf" src="/props/LegendsLimited.webp" alt="El personaje es LEGENDS LIMITED" />}
+                {basic.lf && <img class="lf" src="/props/LegendsLimited.webp" alt="El personaje es LEGENDS LIMITED" />}
             </article>
 
             <aside class="buttons">
-                {character.zenkai && <ZenkaiButton />}
-                {character.switch && <TagButton />}
-                {character.transformable && <TransformButton />}
-                {character.fusion && <FusionButton />}
+                {basic.zenkai && <ZenkaiButton />}
+                {basic.switch && <TagButton />}
+                {basic.transformable && <TransformButton />}
+                {basic.fusion && <FusionButton />}
             </aside>
 
             <article class="text">
                 <img class="character-element" src={`/element/${color}1.webp`} alt="Afinidad del personaje" />
-                <h3>{character._id}</h3>
-                <h1>{character.name}</h1>
+                <h3>{basic._id}</h3>
+                <h1>{basic.name}</h1>
             </article>
         </section>
         {
-            character.abilities.ultra && (
+            abilities.ultra && (
                 <section class="character-ability">
                     <h2>Habilidad ULTRA</h2>
                     <article class="ability ultra">
-                        <h3>{character.abilities.ultra[0][0]}</h3>
-                        <pre>{character.abilities.ultra[0][1]}</pre>
+                        <h3>{abilities.ultra[0].title}</h3>
+                        <pre>{abilities.ultra[0].desc}</pre>
                     </article>
                 </section>
             )
@@ -64,10 +64,10 @@ const rarity = RARITY_BIG[character.rarity._id];
                 abilities={abilities}
                 zenkaiAbilities={zenkaiAbilities}
                 character={{
-                    switch: character.switch,
-                    transformable: character.transformable,
-                    zenkai: character.zenkai,
-                    fusion: character.fusion
+                    switch: basic.switch,
+                    transformable: basic.transformable,
+                    zenkai: basic.zenkai,
+                    fusion: basic.fusion
                 }}
             />
         </section>
@@ -77,10 +77,10 @@ const rarity = RARITY_BIG[character.rarity._id];
                 abilities={abilities}
                 zenkaiAbilities={zenkaiAbilities}
                 character={{
-                    switch: character.switch,
-                    transformable: character.transformable,
-                    zenkai: character.zenkai,
-                    fusion: character.fusion
+                    switch: basic.switch,
+                    transformable: basic.transformable,
+                    zenkai: basic.zenkai,
+                    fusion: basic.fusion
                 }}
             />
         </section>
@@ -94,12 +94,12 @@ const rarity = RARITY_BIG[character.rarity._id];
                     <input class="z-button" type="button" value="IV" />
                 </section>
 
-                {character.abilities.zAbility.map((a, i) => <pre class={`z z-${i}`}>{a}</pre>)}
+                {abilities.zAbility.map((a, i) => <pre class={`z z-${i}`}>{a}</pre>)}
             </article>
         </section>
 
         {
-            character.abilities.limitedZ && (
+            abilities.limitedZ && (
                 <section class="character-ability">
                     <h2>Habilidad Z Limited</h2>
                     <article class="ability">
@@ -110,7 +110,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                             <input class="z-limited-button" type="button" value="IV" />
                         </section>
 
-                        {character.abilities.limitedZ.map((a, i) => (
+                        {abilities.limitedZ.map((a, i) => (
                             <pre class={`z-limited z-limited-${i}`}>{a}</pre>
                         ))}
                     </article>
@@ -119,7 +119,7 @@ const rarity = RARITY_BIG[character.rarity._id];
         }
 
         {
-            character.zenkaiAbilities?.zenkaiAbility && (
+            zenkaiAbilities?.zenkaiAbility && (
                 <section class="character-ability zenkai">
                     <h2>Habilidad Zenkai</h2>
                     <article class="ability">
@@ -130,7 +130,7 @@ const rarity = RARITY_BIG[character.rarity._id];
                             <input class="zenkai-ability-button" type="button" value="IV" />
                         </section>
 
-                        {character.zenkaiAbilities.zenkaiAbility.map((a, i) => (
+                        {zenkaiAbilities.zenkaiAbility.map((a, i) => (
                             <pre class={`zenkai-ability zenkai-ability-${i}`}>{a}</pre>
                         ))}
                     </article>

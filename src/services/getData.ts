@@ -1,6 +1,6 @@
-import { BASE_API_URL, BASE_API_ENDPOINTS } from "../utils/API";
+import type { FormatedCharacterV2 } from "../types/formated.character.v2";
 import type { SummaryCharacter } from "../types/summary.formated.character";
-import type { FormatedCharacter } from "../types/formated.character";
+import { API_URL_V2, BASE_API_ENDPOINTS, BASE_API_URL } from "../utils/API";
 
 export async function getSummaryCharacters(): Promise<SummaryCharacter[]> {
     try {
@@ -26,8 +26,8 @@ export async function getSummaryCharacters(): Promise<SummaryCharacter[]> {
     }
 }
 
-export async function getCharacter(id: number): Promise<FormatedCharacter> {
-    const response = await fetch(`${BASE_API_URL}${BASE_API_ENDPOINTS.id(id)}`);
+export async function getCharacter(id: number): Promise<FormatedCharacterV2> {
+    const response = await fetch(`${API_URL_V2}${BASE_API_ENDPOINTS.id(id)}`);
     const data = await response.json();
 
     return data;

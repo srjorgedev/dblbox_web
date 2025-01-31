@@ -110,3 +110,109 @@ import Reset from "../svg/Reset.astro";
         applyFilters();
     }
 </script>
+
+<style>
+    html.color-1 {
+        select {
+            background-color: rgba(255, 0, 0, 0.048);
+            border: 2px solid rgba(255, 0, 0, 0.28);
+        }
+    }
+    html.color-2 {
+        select {
+            background-color: rgba(255, 255, 0, 0.048);
+            border: 2px solid rgba(255, 255, 0, 0.28);
+        }
+    }
+    html.color-3 {
+        select {
+            background-color: rgba(98, 0, 255, 0.048);
+            border: 2px solid rgba(98, 0, 255, 0.28);
+        }
+    }
+    html.color-4 {
+        select {
+            background-color: rgba(21, 255, 0, 0.048);
+            border: 2px solid rgba(21, 255, 0, 0.28);
+        }
+    }
+    html.color-5 {
+        select {
+            background-color: rgba(0, 204, 255, 0.048);
+            border: 2px solid rgba(0, 204, 255, 0.28);
+        }
+    }
+
+    h4 {
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+
+    .filters {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 1rem;
+        position: relative;
+    }
+
+    .filters-select {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    select {
+        border-radius: 12px;
+        text-align: center;
+        padding: 0.75rem;
+        font-size: 1rem;
+        background: none;
+        background-color: var(--bg-main);
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        color: #f1f1f1;
+        outline: none;
+        transition:
+            background 0.15s ease-in-out,
+            border 0.15s ease-in-out;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    option {
+        display: block;
+        text-align: center;
+        background-color: #333333;
+    }
+
+    button {
+        cursor: pointer;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f1f1f1;
+        transition: background-color 0.3s ease;
+        position: relative;
+        align-self: center;
+        margin-left: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 12px;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+
+        svg {
+            width: 70%;
+            height: 70%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        &:hover svg {
+            transform: rotate(0.75turn);
+        }
+    }
+</style>

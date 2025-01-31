@@ -1,5 +1,5 @@
 ---
-import type { Abilities, ZenkaiAbilities } from "../types/formated.character";
+import type { Abilities, ZenkaiAbilities } from "../types/formated.character.v2";
 
 interface Props {
     zenkaiAbilities: ZenkaiAbilities | null;
@@ -16,30 +16,30 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
 ---
 
 <article class="ability main st on">
-    <h3>{abilities.main[0][0]}</h3>
-    <pre>{abilities.main[0][1]}</pre>
+    <h3>{abilities.main[0].title}</h3>
+    <pre>{abilities.main[0].desc}</pre>
 </article>
 {
     (character.transformable || character.switch) && (
         <article class="ability main nd off">
-            <h3>{abilities.main[1][0]}</h3>
-            <pre>{abilities.main[1][1]}</pre>
+            <h3>{abilities.main[1].title}</h3>
+            <pre>{abilities.main[1].desc}</pre>
         </article>
     )
 }
 {
     (character.switch && character.fusion) && (
         <article class="ability main rd off">
-            <h3>{abilities.main[2][0]}</h3>
-            <pre>{abilities.main[2][1]}</pre>
+            <h3>{abilities.main[2].title}</h3>
+            <pre>{abilities.main[2].desc}</pre>
         </article>
     )
 }
 {
     zenkaiAbilities && character.zenkai && (
         <article class="ability main st-zenkai off">
-            <h3>{zenkaiAbilities.main[0][0]}</h3>
-            <pre>{zenkaiAbilities.main[0][1]}</pre>
+            <h3>{zenkaiAbilities.main[0].title}</h3>
+            <pre>{zenkaiAbilities.main[0].desc}</pre>
         </article>
     )
 }
@@ -48,8 +48,8 @@ const { zenkaiAbilities, abilities, character } = Astro.props;
         zenkaiAbilities &&
         character.zenkai && (
             <article class="ability main nd-zenkai off">
-                <h3>{zenkaiAbilities.main[1][0]}</h3>
-                <pre>{zenkaiAbilities.main[1][1]}</pre>
+                <h3>{zenkaiAbilities.main[1].title}</h3>
+                <pre>{zenkaiAbilities.main[1].desc}</pre>
             </article>
         )
 }

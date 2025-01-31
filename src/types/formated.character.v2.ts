@@ -15,10 +15,10 @@ export interface Basic {
     _id: string
     num: number
     name: string
-    color: Color[] | Color
+    color: Color[]
     type: Type[] | Type
-    chapter: Chapter[] | Chapter
-    rarity: Rarity[] | Rarity
+    chapter: Chapter
+    rarity: Rarity
     tags: Tag[] | Tag
     lf: boolean
     transformable: boolean
@@ -30,13 +30,13 @@ export interface Basic {
 }
 
 export interface Color {
-    _id?: number
-    tag?: string
+    _id: number
+    tag: string
 }
 
 export interface Type {
-    _id?: number
-    tag?: string
+    _id: number
+    tag: string
 }
 
 export interface Chapter {
@@ -45,22 +45,22 @@ export interface Chapter {
 }
 
 export interface Rarity {
-    _id?: number
-    tag?: string
+    _id: number
+    tag: string
 }
 
 export interface Tag {
-    _id?: number
-    tag?: string
+    _id: number
+    tag: string
 }
 
 export interface Abilities {
     zAbility: string[]
     main: Ability[]
-    ultra: Ability[]
+    ultra: Ability[] | null
     unique1: Ability[]
     unique2: Ability[]
-    limitedZ: string[]
+    limitedZ: string[] | null
 }
 
 export interface ZenkaiAbilities {
@@ -77,8 +77,8 @@ export interface Arts {
     blast: Ability[]
     specialMove: Ability[]
     specialArt: Ability[]
-    ultimate: Ability[]
-    awaken: Ability[]
+    ultimate: Ability[] | null
+    awaken: Ability[] | null
 }
 
 export interface ZenkaiArts {
@@ -86,6 +86,6 @@ export interface ZenkaiArts {
     blast: Ability[]
     specialMove: Ability[]
     specialArt: Ability[]
-    ultimate: Ability[]
-    awaken: Ability[]
+    ultimate: Ability[] | null
+    awaken: Ability[] | null
 }
