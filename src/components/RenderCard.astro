@@ -15,7 +15,8 @@ const rar = RARITY[char.rarity._id];
 
 <a
     href={`/character/${char.num}`}
-    class="character-card"
+    class=`character-card ${(char.switch || char.transformable) ? (char.switch && char.transformable || char.switch && char.fusion ? "three-pic" : "two-pic") : ""}
+`
     data-color={`[${char.color[0]._id}${char.color.length > 1 ? "," + char.color[1]._id : ""}]`}
     data-rarity={char.rarity._id}
     data-tags={`[${char.tags.map((item) => item._id).join(",")}]`}
@@ -40,15 +41,11 @@ const rar = RARITY[char.rarity._id];
                 <img decoding="async" loading="lazy" class="card-bchaico nd" src={`${ICO_API_URL}${char.num}2.webp`} alt="" />
             )
         }
-        <!-- {
-            char.fusion && (
-                <img
-                    class="card-bchaico rd"
-                    src={`${ICO_API_URL}${char.num}3.webp`}
-                    alt=""
-                />
+        {
+            ((char.switch && char.fusion) || (char.switch && char.transformable)) && (
+                <img class="card-bchaico rd" src={`${ICO_API_URL}${char.num}3.webp`} alt="" />
             )
-        } -->
+        }
         <img decoding="async" loading="lazy" class="card-color" src={`/color/${color}.webp`} alt="" />
         <img decoding="async" loading="lazy" class="card-element" src={`/element/${color}1.webp`} alt="" />
         <img decoding="async" loading="lazy" class="card-rarity" src={`/rarity/${rar}.webp`} alt="" />
@@ -61,6 +58,28 @@ const rar = RARITY[char.rarity._id];
     .hidden {
         display: none;
     }
+
+    a.character-card.two-pic article img.card-bchaico.st {
+        animation: fadeTwo 6s infinite alternate ease-in-out !important;
+    }
+
+    a.character-card.two-pic article img.card-bchaico.nd {
+        animation: fadeTwo 6s infinite alternate-reverse ease-in-out !important;
+    }
+
+    a.character-card.three-pic article img.card-bchaico.st {
+        animation: fadeThree 12s infinite !important;
+        animation-delay: 0s;
+    }
+
+    a.character-card.three-pic article img.card-bchaico.nd {
+        animation: fadeThree 12s infinite -8s !important;
+    }
+
+    a.character-card.three-pic article img.card-bchaico.rd {
+        animation: fadeThree 12s infinite -4s !important;
+    }
+
     article.card {
         width: 100%;
         position: relative;
@@ -89,25 +108,24 @@ const rar = RARITY[char.rarity._id];
             position: absolute;
         }
 
+        img.card-bchaico.s.fade,
+        img.card-bchaico.nd,
+        img.card-bchaico.rd {
+            opacity: 0;
+        }
+
         img.nd,
         img.rd {
             position: absolute;
             left: 0;
             bottom: -16px;
             z-index: 2;
-            opacity: 0;
-            animation: fadeIn 12s infinite;
         }
 
         img.card-bchaico.st {
             position: relative;
             bottom: -16px;
             z-index: 3;
-
-            &.fade {
-                opacity: 1;
-                animation: fadeOut 12s infinite;
-            }
         }
 
         img.card-element {
@@ -138,11 +156,17 @@ const rar = RARITY[char.rarity._id];
         }
     }
 
-    @keyframes fadeOut {
+    @keyframes fadeThree {
         0% {
             opacity: 1;
         }
-        50% {
+        20% {
+            opacity: 1;
+        }
+        34% {
+            opacity: 0;
+        }
+        88% {
             opacity: 0;
         }
         100% {
@@ -150,12 +174,15 @@ const rar = RARITY[char.rarity._id];
         }
     }
 
-    @keyframes fadeIn {
+    @keyframes fadeTwo {
         0% {
-            opacity: 0;
-        }
-        50% {
             opacity: 1;
+        }
+        25% {
+            opacity: 1;
+        }
+        75% {
+            opacity: 0;
         }
         100% {
             opacity: 0;

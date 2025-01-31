@@ -205,10 +205,16 @@ const { selected } = Astro.props;
         grid-area: content;
         padding: var(--spacing-xl) var(--spacing-2xl);
         overflow: auto;
+        overflow-x: hidden; /* Evita el scroll horizontal */
+        max-width: 100%; /* Asegura que no se desborde */
+        word-wrap: break-word; /* Permite el ajuste de palabras largas */
+        overflow-wrap: break-word;
+    }
 
-        /* Improved scrollbar styling */
-        scrollbar-width: thin;
-        scrollbar-color: var(--bg-nd-05) var(--bg-rd-1);
+    /* Para el caso en que haya elementos internos que se desborden */
+    .container > * {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .container::-webkit-scrollbar {

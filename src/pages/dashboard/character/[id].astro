@@ -5,11 +5,175 @@ import { RARITY, COLORS, RARITY_BIG } from "../../../utils/atributes";
 const { id } = Astro.params;
 
 const character = await getCharacter(parseInt(id!));
-const { abilities, arts, zenkaiAbilities, zenkaiArts } = character;
+const { abilities, arts, zenkaiAbilities, zenkaiArts, basic } = character;
 
-const color = COLORS[character.color[0]._id];
-const rar = RARITY[character.rarity._id];
-const rarity = RARITY_BIG[character.rarity._id];
+const color = COLORS[basic.color[0]._id];
+const rar = RARITY[basic.rarity._id];
+const rarity = RARITY_BIG[basic.rarity._id];
 ---
 
-<DashLayout selected={1} />
+<DashLayout selected={1}>
+    <h1>{basic.name}</h1>
+
+    <section>
+        <h2>Habilidad principal</h2>
+        <article>
+            {
+                abilities.main.map((ability) => (
+                    <div class="ability-container">
+                        <input type="text" value={ability.title} />
+                        <pre contenteditable="true" id="main">
+                            {ability.desc}
+                        </pre>
+                    </div>
+                ))
+            }
+        </article>
+    </section>
+
+    <section>
+        <h2>Habilidades unicas</h2>
+        <article>
+            {
+                abilities.unique1.map((ability) => (
+                    <div class="ability-container">
+                        <input type="text" value={ability.title} />
+                        <pre contenteditable="true" id="main">
+                            {ability.desc}
+                        </pre>
+                    </div>
+                ))
+            }
+        </article>
+        <article>
+            {
+                abilities.unique1.map((ability) => (
+                    <div class="ability-container">
+                        <input type="text" value={ability.title} />
+                        <pre contenteditable="true" id="main">
+                            {ability.desc}
+                        </pre>
+                    </div>
+                ))
+            }
+        </article>
+    </section>
+    <section>
+        <h2>Habilidad Z</h2>
+        <article class="z-abilities">
+            {
+                abilities.zAbility.map((ability) => (
+                    <div class="ability-container">
+                        <pre contenteditable="true" id="main">
+                            {ability}
+                        </pre>
+                    </div>
+                ))
+            }
+        </article>
+    </section>
+    {
+        abilities.limitedZ && (
+            <section>
+                <h2>Habilidad Z Limited</h2>
+                <article class="z-abilities">
+                    {abilities.limitedZ.map((ability) => (
+                        <div class="ability-container">
+                            <pre contenteditable="true" id="main">
+                                {ability}
+                            </pre>
+                        </div>
+                    ))}
+                </article>
+            </section>
+        )
+    }
+    {
+        abilities.ultra && (
+            <section>
+                <h2>Habilidad Ultra</h2>
+                <article>
+                    {abilities.ultra.map((ability) => (
+                        <div class="ability-container">
+                            <input type="text" value={ability.title} />
+                            <pre contenteditable="true" id="main">
+                                {ability.desc}
+                            </pre>
+                        </div>
+                    ))}
+                </article>
+            </section>
+        )
+    }
+</DashLayout>
+
+<style>
+    h1 {
+        font-weight: 600;
+        font-size: var(--font-size-lg);
+        line-height: 1;
+    }
+
+    section {
+        h2 {
+            font-size: 1.5rem;
+            margin: 1rem 0 0.72rem 0;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 0 0 0.75rem 0;
+            font-weight: normal;
+        }
+
+        article {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--spacing-sm);
+            width: 100%;
+            margin-bottom: var(--spacing-sm);
+
+            .ability-container {
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    font-weight: 600;
+                    font-size: var(--font-size-g);
+                    border: none;
+                    background: none;
+                    margin-bottom: var(--spacing-sm);
+                }
+
+                pre {
+                    font-size: 0.85rem;
+                    flex: 1;
+                }
+
+                input:active,
+                input:focus,
+                pre:active,
+                pre:focus {
+                    background-color: var(--bg-rd-2);
+                    color: #232323;
+                }
+
+                input,
+                pre {
+                    display: inline-block;
+                    white-space: pre-line;
+                    word-wrap: break-word;
+                    box-sizing: border-box;
+                    line-height: 1.2;
+                    padding: 1rem;
+                    background-color: var(--bg-rd-2);
+                    border-radius: var(--spacing-sm);
+                    color: #7c7c7c;
+                    transition:
+                        background-color 0.15s ease-in-out,
+                        color 0.15s ease-in-out;
+                }
+            }
+        }
+    }
+</style>
