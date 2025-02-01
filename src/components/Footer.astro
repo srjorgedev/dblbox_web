@@ -1,35 +1,9 @@
 <footer></footer>
 
 <style>
-    html.color-1 {
-        footer {
-            background-color: rgba(255, 0, 0, 0.048);
-            outline: 2px solid rgba(255, 0, 0, 0.28);
-        }
-    }
-    html.color-2 {
-        footer {
-            background-color: rgba(255, 255, 0, 0.048);
-            outline: 2px solid rgba(255, 255, 0, 0.28);
-        }
-    }
-    html.color-3 {
-        footer {
-            background-color: rgba(98, 0, 255, 0.048);
-            outline: 2px solid rgba(98, 0, 255, 0.28);
-        }
-    }
-    html.color-4 {
-        footer {
-            background-color: rgba(21, 255, 0, 0.048);
-            outline: 2px solid rgba(21, 255, 0, 0.28);
-        }
-    }
-    html.color-5 {
-        footer {
-            background-color: rgba(0, 204, 255, 0.048);
-            outline: 2px solid rgba(0, 204, 255, 0.28);
-        }
+    :root {
+        --color-1: var(--bg-second);
+        --color-2: var(--bg-third);
     }
 
     footer {
@@ -37,8 +11,8 @@
         height: 8rem;
         background-color: red;
         margin: 1rem 0 0 0;
-        background-color: rgba(255, 255, 255, 0.048);
-        outline: 2px solid rgba(255, 255, 255, 0.28);
+        background-color: var(--color-1);
+        outline: 2px solid var(--color-2);
         transition:
             background 0.15s ease-in-out,
             outline 0.15s ease-in-out;
@@ -47,7 +21,7 @@
     @media (min-width: 769px) {
         footer {
             height: 9rem;
-            border-radius: 1rem 1rem 0 0;
+            border-radius: var(--round-md) var(--round-md) 0 0;
             padding: 1rem 2rem;
             top: 1rem;
         }
@@ -56,7 +30,7 @@
     @media (min-width: 1025px) {
         footer {
             height: 12rem;
-            border-radius: 1rem 1rem 0 0;
+            border-radius: var(--round-md) var(--round-md) 0 0;
             top: 1rem;
         }
     }

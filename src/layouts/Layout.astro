@@ -7,13 +7,14 @@ interface Props {
 	Title: string;
 	ICO: string;
 	Cannonical: URL;
+	Color?: string;
 }
 
-const { Title, ICO, Cannonical } = Astro.props;
+const { Title, ICO, Cannonical, Color = "" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html class={Color} lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -26,6 +27,8 @@ const { Title, ICO, Cannonical } = Astro.props;
 		<title>{Title}</title>
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
 		<base href="https://www.dbl-box.com/" />
+		<!-- <base href="http://localhost:4321/" /> -->
+		<meta property="og:site_name" content="DBL BOX" />
 		<meta property="og:title" content={`${Title} | DBL BOX`} />
 		<meta name="twitter:title" content={`${Title} | DBL BOX`} />
 		<link rel="canonical" href={Cannonical} />
@@ -64,6 +67,32 @@ const { Title, ICO, Cannonical } = Astro.props;
 
 	:root {
 		--bg-main: rgb(10, 22, 37);
+		--bg-second: rgba(20, 44, 74, 0.078);
+		--bg-third: rgba(40, 88, 148, 0.28);
+
+		--color-1: var(--bg-second);
+		--color-2: var(--bg-third);
+
+		--round-sm: 4px;
+		--round-md: 8px;
+		--round-lg: 16px;
+		--roung-xl: 24px;
+		--round-xxl: 32px;
+
+		--blu-100: rgba(0, 204, 255, 0.048);
+		--blu-50: rgba(0, 204, 255, 0.28);
+
+		--grn-100: rgba(21, 255, 0, 0.048);
+		--grn-50: rgba(21, 255, 0, 0.28);
+
+		--pur-100: rgba(98, 0, 255, 0.048);
+		--pur-50: rgba(98, 0, 255, 0.28);
+
+		--yel-100: rgba(255, 255, 0, 0.048);
+		--yel-50: rgba(255, 255, 0, 0.28);
+
+		--red-100: rgba(255, 0, 0, 0.048);
+		--red-50: rgba(255, 0, 0, 0.28);
 	}
 
 	html {
@@ -78,6 +107,31 @@ const { Title, ICO, Cannonical } = Astro.props;
 		background-color: var(--bg-main);
 		scrollbar-gutter: auto;
 		font-size: 1.15rem;
+	}
+
+	html.color-red {
+		--color-1: var(--red-100);
+		--color-2: var(--red-50);
+	}
+
+	html.color-yel {
+		--color-1: var(--yel-100);
+		--color-2: var(--yel-50);
+	}
+
+	html.color-pur {
+		--color-1: var(--pur-100);
+		--color-2: var(--pur-50);
+	}
+
+	html.color-grn {
+		--color-1: var(--grn-100);
+		--color-2: var(--grn-50);
+	}
+
+	html.color-blu {
+		--color-1: var(--blu-100);
+		--color-2: var(--blu-50);
 	}
 
 	main.layout {

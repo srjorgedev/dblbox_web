@@ -22,7 +22,12 @@ const rar = RARITY[basic.rarity._id];
 const rarity = RARITY_BIG[basic.rarity._id];
 ---
 
-<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO={`${ICO_API_URL}${id}.webp`} Title={`${basic._id} - ${basic.name}`}>
+<Layout
+    Color=`color-${color.toLocaleLowerCase()}`
+    Cannonical={new URL(Astro.url.pathname, Astro.site)}
+    ICO={`${ICO_API_URL}${id}.webp`}
+    Title={`${basic._id} - ${basic.name}`}
+>
     <div class={`character ${color}`}>
         <section class={`character-banner ${color}`} data-stage="first">
             <img class="bchacut st on" src={`${CUT_API_URL}${id}.webp`} alt="" />
@@ -334,70 +339,12 @@ const rarity = RARITY_BIG[basic.rarity._id];
     .character {
         width: 100%;
 
-        &.RED {
-            section.character-ability {
-                article.ability {
-                    input[type="button"].selected,
-                    pre.z,
-                    pre.zenkai-ability,
-                    pre.z-limited {
-                        background-color: rgba(255, 0, 0, 0.048);
-                        outline: 1px solid rgba(255, 0, 0, 0.28);
-                    }
-                }
-            }
-        }
-        &.YEL {
-            section.character-ability {
-                article.ability {
-                    input[type="button"].selected,
-                    pre.z,
-                    pre.zenkai-ability,
-                    pre.z-limited {
-                        background-color: rgba(255, 255, 0, 0.048);
-                        outline: 1px solid rgba(255, 255, 0, 0.28);
-                    }
-                }
-            }
-        }
-        &.PUR {
-            section.character-ability {
-                article.ability {
-                    input[type="button"].selected,
-                    pre.z,
-                    pre.zenkai-ability,
-                    pre.z-limited {
-                        background-color: rgba(98, 0, 255, 0.048);
-                        outline: 1px solid rgba(98, 0, 255, 0.28);
-                    }
-                }
-            }
-        }
-        &.GRN {
-            section.character-ability {
-                article.ability {
-                    input[type="button"].selected,
-                    pre.z,
-                    pre.zenkai-ability,
-                    pre.z-limited {
-                        background-color: rgba(21, 255, 0, 0.048);
-                        outline: 1px solid rgba(21, 255, 0, 0.28);
-                    }
-                }
-            }
-        }
-        &.BLU {
-            section.character-ability {
-                article.ability {
-                    input[type="button"].selected,
-                    pre.z,
-                    pre.zenkai-ability,
-                    pre.z-limited {
-                        background-color: rgba(0, 204, 255, 0.048);
-                        outline: 1px solid rgba(0, 204, 255, 0.28);
-                    }
-                }
-            }
+        input[type="button"].selected,
+        pre.z,
+        pre.zenkai-ability,
+        pre.z-limited {
+            background-color: var(--color-1);
+            outline: 1px solid var(--color-2);
         }
 
         section.character-ability {
@@ -424,7 +371,7 @@ const rarity = RARITY_BIG[basic.rarity._id];
                     &.z-limited,
                     &.zenkai-ability {
                         padding: 1rem;
-                        border-radius: 0.5rem;
+                        border-radius: var(--round-md);
                     }
                 }
 
@@ -441,10 +388,12 @@ const rarity = RARITY_BIG[basic.rarity._id];
                         transition:
                             background 0.26s ease-in-out,
                             color 0.22s ease-in-out;
-                        background-color: rgb(66, 66, 66);
                         color: #f1f1f1;
                         cursor: pointer;
                         border-radius: 0.25rem;
+                    }
+                    input[type="button"]:not(.selected) {
+                        background-color: rgb(66, 66, 66);
                     }
                 }
             }
@@ -604,7 +553,7 @@ const rarity = RARITY_BIG[basic.rarity._id];
     @media (min-width: 769px) {
         .character {
             .character-banner {
-                border-radius: 1rem;
+                border-radius: var(--round-md);
                 height: 100%;
                 width: 100%;
                 aspect-ratio: 4/1;

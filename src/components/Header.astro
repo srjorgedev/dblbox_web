@@ -35,35 +35,9 @@ import Menu from "./svg/Menu.astro";
 </header>
 
 <style>
-    html.color-1 {
-        header {
-            background-color: rgba(255, 0, 0, 0.048);
-            outline: 2px solid rgba(255, 0, 0, 0.28);
-        }
-    }
-    html.color-2 {
-        header {
-            background-color: rgba(255, 255, 0, 0.048);
-            outline: 2px solid rgba(255, 255, 0, 0.28);
-        }
-    }
-    html.color-3 {
-        header {
-            background-color: rgba(98, 0, 255, 0.048);
-            outline: 2px solid rgba(98, 0, 255, 0.28);
-        }
-    }
-    html.color-4 {
-        header {
-            background-color: rgba(21, 255, 0, 0.048);
-            outline: 2px solid rgba(21, 255, 0, 0.28);
-        }
-    }
-    html.color-5 {
-        header {
-            background-color: rgba(0, 204, 255, 0.048);
-            outline: 2px solid rgba(0, 204, 255, 0.28);
-        }
+    :root {
+        --color-1: var(--bg-second);
+        --color-2: var(--bg-third);
     }
 
     h4 {
@@ -79,8 +53,8 @@ import Menu from "./svg/Menu.astro";
         padding: 0.5rem 1rem;
         border-radius: 0;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.048);
-        outline: 2px solid rgba(255, 255, 255, 0.28);
+        background-color: var(--color-1);
+        outline: 2px solid var(--color-2);
         backdrop-filter: blur(24px);
         display: flex;
         justify-content: center;
@@ -107,7 +81,7 @@ import Menu from "./svg/Menu.astro";
                 justify-content: center;
                 list-style-type: none;
                 padding: 0.5rem 1rem;
-                border-radius: 0.5rem;
+                border-radius: var(--round-md);
                 transition: background 0.3s ease-in-out;
 
                 &:hover {
@@ -138,7 +112,7 @@ import Menu from "./svg/Menu.astro";
 
             li {
                 list-style-type: none;
-                border-radius: 0.5rem;
+                border-radius: var(--round-md);
                 transition: background 0.3s ease-in-out;
 
                 &:hover {
@@ -174,7 +148,7 @@ import Menu from "./svg/Menu.astro";
             display: none;
         }
         header {
-            border-radius: 1rem;
+            border-radius: var(--round-md);
             padding: 1rem 2rem;
             top: 1rem;
         }
@@ -182,7 +156,7 @@ import Menu from "./svg/Menu.astro";
 
     @media (min-width: 1025px) {
         header {
-            border-radius: 1rem;
+            border-radius: var(--round-md);
             top: 1rem;
         }
     }
