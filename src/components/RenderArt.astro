@@ -3,7 +3,19 @@ import type { Ability } from "../types/formated.character.v2";
 interface Props {
     Data: Ability;
     Name: "strike" | "blast" | "special_art" | "special_move" | "ultimate" | "awaken";
-    Label: "Carta Fisica" | "Carta de Energia" | "Carta Especial" | "Movimiento Especial" | "Carta Definitiva" | "Carta Despertar" | "Carta Fisica Zenkai" | "Carta de Energia Zenkai" | "Carta Especial Zenkai" | "Movimiento Especial Zenkai" | "Carta Definitiva Zenkai" | "Carta Despertar Zenkai";
+    Label:
+        | "Carta Fisica"
+        | "Carta de Energia"
+        | "Carta Especial"
+        | "Movimiento Especial"
+        | "Carta Definitiva"
+        | "Carta Despertar"
+        | "Carta Fisica Zenkai"
+        | "Carta de Energia Zenkai"
+        | "Carta Especial Zenkai"
+        | "Movimiento Especial Zenkai"
+        | "Carta Definitiva Zenkai"
+        | "Carta Despertar Zenkai";
     Class?: string;
 }
 
@@ -32,6 +44,7 @@ const className = Name === "special_art" ? "special-art" : Name === "special_mov
         background: transparent;
         border-radius: var(--round-md);
         outline: 2px solid transparent;
+        width: 100%;
 
         &.strike {
             background: var(--bg-strike);
@@ -84,12 +97,12 @@ const className = Name === "special_art" ? "special-art" : Name === "special_mov
                 justify-content: center;
 
                 h2 {
-                    font-size: 1rem;
+                    font-size: 0.5rem;
                     font-weight: normal;
                 }
 
                 h3 {
-                    font-size: 1.3rem;
+                    font-size: 0.7rem;
                 }
 
                 h2,
@@ -97,7 +110,8 @@ const className = Name === "special_art" ? "special-art" : Name === "special_mov
                     margin: 0;
                     padding: 0;
                     line-height: 1;
-                    white-space: nowrap;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
                 }
             }
         }
@@ -110,7 +124,27 @@ const className = Name === "special_art" ? "special-art" : Name === "special_mov
                 padding: 0;
                 white-space: pre-wrap;
                 word-wrap: break-word;
-                font-size: 0.9rem;
+                font-size: 0.7rem;
+            }
+        }
+    }
+
+    @media (min-width: 769px) {
+        article {
+            header {
+                .art-title {
+                    h3 {
+                        font-size: 1.3rem;
+                    }
+                    h2 {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+            main {
+                pre {
+                    font-size: 0.9rem;
+                }
             }
         }
     }
