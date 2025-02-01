@@ -8,8 +8,8 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  site: "https://www.dbl-box.com",
-  //site: "http://localhost:4321",
+  // site: "https://www.dbl-box.com",
+  site: "http://localhost:4321",
   integrations: [react()],
   adapter: vercel({
     isr: {

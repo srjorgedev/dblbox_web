@@ -1,16 +1,15 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { CUT_API_URL, BASE_API_ENDPOINTS, BASE_API_URL, ICO_API_URL } from "../../utils/API";
-import type { FormatedCharacter, Tag } from "../../types/formated.character";
-import { COLORS, RARITY, RARITY_BIG } from "../../utils/atributes";
-import RenderArt from "../../components/character/RenderArt.astro";
+import ArtsSection from "../../components/ArtsSection.astro";
 import RenderMain from "../../components/RenderMain.astro";
 import RenderUniques from "../../components/RenderUniques.astro";
-import ZenkaiButton from "../../components/button/ZenkaiButton.astro";
-import TransformButton from "../../components/button/TransformButton.astro";
-import TagButton from "../../components/button/TagButton.astro";
 import FusionButton from "../../components/button/FusionButton.astro";
+import TagButton from "../../components/button/TagButton.astro";
+import TransformButton from "../../components/button/TransformButton.astro";
+import ZenkaiButton from "../../components/button/ZenkaiButton.astro";
+import Layout from "../../layouts/Layout.astro";
 import { getCharacter } from "../../services/getData";
+import { CUT_API_URL, ICO_API_URL } from "../../utils/API";
+import { COLORS, RARITY, RARITY_BIG } from "../../utils/atributes";
 
 const { id } = Astro.params;
 
@@ -142,6 +141,11 @@ const rarity = RARITY_BIG[basic.rarity._id];
                 </section>
             )
         }
+
+        <section class="character-ability arts on">
+            <h2>Destrezas</h2>
+            <ArtsSection arts={arts} zenkaiArts={zenkaiArts} />
+        </section>
     </div>
 </Layout>
 
@@ -528,12 +532,28 @@ const rarity = RARITY_BIG[basic.rarity._id];
         word-wrap: break-word;
     }
 
-    .off {
-        display: none;
+    .st.off,
+    .nd.off,
+    .rd.off,
+    .st-zenkai.off,
+    .nd-zenkai.off,
+    .rd-zenkai.off,
+    .z.off,
+    .z-limited.off,
+    .zenkai-ability.off {
+        display: none !important;
     }
 
-    .on {
-        display: block;
+    .st.on,
+    .nd.on,
+    .rd.on,
+    .st-zenkai.on,
+    .nd-zenkai.on,
+    .rd-zenkai.on,
+    .z.on,
+    .z-limited.on,
+    .zenkai-ability.on {
+        display: block !important;
     }
 
     @media (max-width: 769px) {

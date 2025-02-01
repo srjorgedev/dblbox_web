@@ -26,8 +26,8 @@ const { Title, ICO, Cannonical, Color = "" } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{Title}</title>
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
-		<base href="https://www.dbl-box.com/" />
-		<!-- <base href="http://localhost:4321/" /> -->
+		<!-- <base href="https://www.dbl-box.com/" /> -->
+		<base href="http://localhost:4321/" />
 		<meta property="og:site_name" content="DBL BOX" />
 		<meta property="og:title" content={`${Title} | DBL BOX`} />
 		<meta name="twitter:title" content={`${Title} | DBL BOX`} />
@@ -70,11 +70,29 @@ const { Title, ICO, Cannonical, Color = "" } = Astro.props;
 		--bg-second: rgba(20, 44, 74, 0.078);
 		--bg-third: rgba(40, 88, 148, 0.28);
 
+		--opacity-1: 0.1;
+		--opacity-2: 0.3;
+
+		--bg-strike: rgba(135, 20, 13, var(--opacity-1));
+		--bg-blast: rgba(206, 126, 2, var(--opacity-1));
+		--bg-special-art: rgba(9, 86, 31, var(--opacity-1));
+		--bg-special-move: rgba(11, 69, 180, var(--opacity-1));
+		--bg-awaken: rgba(131, 9, 137, var(--opacity-1));
+		--bg-ultimate: rgba(50, 73, 98, var(--opacity-1));
+
+		--bg-strike-2: rgba(135, 20, 13, var(--opacity-2));
+		--bg-blast-2: rgba(206, 126, 2, var(--opacity-2));
+		--bg-special-art-2: rgba(9, 86, 31, var(--opacity-2));
+		--bg-special-move-2: rgba(11, 69, 180, var(--opacity-2));
+		--bg-awaken-2: rgba(131, 9, 137, var(--opacity-2));
+		--bg-ultimate-2: rgba(50, 73, 98, var(--opacity-2));
+
 		--color-1: var(--bg-second);
 		--color-2: var(--bg-third);
 
 		--round-sm: 4px;
 		--round-md: 8px;
+		--round-md-lg: 12px;
 		--round-lg: 16px;
 		--roung-xl: 24px;
 		--round-xxl: 32px;
@@ -98,7 +116,7 @@ const { Title, ICO, Cannonical, Color = "" } = Astro.props;
 	html {
 		color: #f1f1f1;
 		font-size: 12px;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: sans-serif, Arial, Helvetica;
 	}
 
 	html,

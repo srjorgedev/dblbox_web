@@ -1,0 +1,121 @@
+---
+import type { Arts } from "../types/formated.character.v2";
+import RenderArt from "./RenderArt.astro";
+
+interface Props {
+    arts: Arts;
+    zenkaiArts?: Arts | null;
+}
+
+const { arts, zenkaiArts } = Astro.props;
+---
+
+<section class="arts-section">
+    {
+        arts.strike.map((art, i) => {
+            const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+            return <RenderArt Data={art} Label="Carta Fisica" Name="strike" Class={className} />;
+        })
+    }
+    {
+        arts.blast.map((art, i) => {
+            const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+            return <RenderArt Data={art} Label="Carta de Energia" Name="blast" Class={className} />;
+        })
+    }
+    {
+        arts.specialArt.map((art, i) => {
+            const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+            return <RenderArt Data={art} Label="Carta Especial" Name="special_art" Class={className} />;
+        })
+    }
+    {
+        arts.specialMove.map((art, i) => {
+            const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+            return <RenderArt Data={art} Label="Movimiento Especial" Name="special_move" Class={className} />;
+        })
+    }
+    {
+        arts.ultimate &&
+            arts.ultimate.map((art, i) => {
+                const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+                return <RenderArt Data={art} Label="Carta Definitiva" Name="ultimate" Class={className} />;
+            })
+    }
+    {
+        arts.awaken &&
+            arts.awaken.map((art, i) => {
+                const className = i === 0 ? "st on" : i === 1 ? "nd off" : i === 2 ? "rd off" : "";
+                return <RenderArt Data={art} Label="Carta Despertar" Name="awaken" Class={className} />;
+            })
+    }
+
+    {
+        zenkaiArts?.strike.map((art, i) => {
+            const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+            return <RenderArt Data={art} Label="Carta Fisica Zenkai" Name="strike" Class={className} />;
+        })
+    }
+    {
+        zenkaiArts?.blast.map((art, i) => {
+            const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+            return <RenderArt Data={art} Label="Carta de Energia Zenkai" Name="blast" Class={className} />;
+        })
+    }
+    {
+        zenkaiArts?.specialArt.map((art, i) => {
+            const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+            return <RenderArt Data={art} Label="Carta Especial Zenkai" Name="special_art" Class={className} />;
+        })
+    }
+    {
+        zenkaiArts?.specialMove.map((art, i) => {
+            const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+            return <RenderArt Data={art} Label="Movimiento Especial Zenkai" Name="special_move" Class={className} />;
+        })
+    }
+    {
+        zenkaiArts?.ultimate &&
+            zenkaiArts?.ultimate.map((art, i) => {
+                const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+                return <RenderArt Data={art} Label="Carta Definitiva Zenkai" Name="ultimate" Class={className} />;
+            })
+    }
+    {
+        zenkaiArts?.awaken &&
+            zenkaiArts?.awaken.map((art, i) => {
+                const className = i === 0 ? "st-zenkai off" : i === 1 ? "nd-zenkai off" : i === 2 ? "rd-zenkai off" : "";
+                return <RenderArt Data={art} Label="Carta Despertar Zenkai" Name="awaken" Class={className} />;
+            })
+    }
+</section>
+
+<style>
+    .arts-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        gap: var(--round-md-lg);
+        padding: 0.5rem 1rem;
+    }
+
+    @media (min-width: 840px) {
+        .arts-section {
+            grid-template-columns: 1fr 1fr;
+            .art-awaken,
+            .art-ultimate {
+                grid-column: span 2;
+            }
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .arts-section {
+            grid-template-columns: 1fr 1fr;
+            .art-awaken,
+            .art-ultimate {
+                grid-column: span 2;
+            }
+        }
+    }
+</style>
