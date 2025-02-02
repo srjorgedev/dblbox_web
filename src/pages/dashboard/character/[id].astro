@@ -129,9 +129,9 @@ const rarity = RARITY_BIG[basic.rarity._id];
         article {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: var(--spacing-sm);
+            gap: var(--round-sm);
             width: 100%;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--round-sm);
 
             .ability-container {
                 display: flex;
@@ -142,7 +142,7 @@ const rarity = RARITY_BIG[basic.rarity._id];
                     font-size: var(--font-size-g);
                     border: none;
                     background: none;
-                    margin-bottom: var(--spacing-sm);
+                    margin-bottom: var(--round-sm);
                 }
 
                 pre {
@@ -167,7 +167,7 @@ const rarity = RARITY_BIG[basic.rarity._id];
                     line-height: 1.2;
                     padding: 1rem;
                     background-color: var(--bg-rd-2);
-                    border-radius: var(--spacing-sm);
+                    border-radius: var(--round-sm);
                     color: #7c7c7c;
                     transition:
                         background-color 0.15s ease-in-out,

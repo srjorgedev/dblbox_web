@@ -70,11 +70,11 @@ const { selected } = Astro.props;
         --font-weight-bold: 600;
 
         /* Spacing */
-        --spacing-sm: 0.75rem;
-        --spacing-md: 1.25rem;
-        --spacing-lg: 1.5rem;
-        --spacing-xl: 2rem;
-        --spacing-2xl: 2.5rem;
+        --round-sm: 0.75rem;
+        --round-md: 1.25rem;
+        --round-lg: 1.5rem;
+        --round-xl: 2rem;
+        --round-2xl: 2.5rem;
 
         /* Animation */
         --transition-normal: 240ms ease-in-out;
@@ -127,10 +127,10 @@ const { selected } = Astro.props;
         grid-area: sidebar;
         background: var(--bg-main);
         color: #f1f1f1;
-        padding: var(--spacing-xl) var(--spacing-2xl);
+        padding: var(--round-xl) var(--round-2xl);
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-xl);
+        gap: var(--round-xl);
     }
 
     .brand {
@@ -150,7 +150,7 @@ const { selected } = Astro.props;
         display: flex;
         flex-direction: column;
         width: 100%;
-        gap: var(--spacing-md);
+        gap: var(--round-md);
     }
 
     nav li {
@@ -163,7 +163,7 @@ const { selected } = Astro.props;
     nav li a {
         color: #f1f1f1;
         text-decoration: none;
-        padding: var(--spacing-sm) var(--spacing-lg);
+        padding: var(--round-sm) var(--round-lg);
         display: block;
         font-weight: var(--font-weight-bold);
         transition: color var(--transition-normal);
@@ -203,7 +203,7 @@ const { selected } = Astro.props;
     /* Content Area */
     .container {
         grid-area: content;
-        padding: var(--spacing-xl) var(--spacing-2xl);
+        padding: var(--round-xl) var(--round-2xl);
         overflow: auto;
         overflow-x: hidden; /* Evita el scroll horizontal */
         max-width: 100%; /* Asegura que no se desborde */
@@ -240,11 +240,11 @@ const { selected } = Astro.props;
         }
 
         aside {
-            padding: var(--spacing-md);
+            padding: var(--round-md);
         }
 
         .container {
-            padding: var(--spacing-md);
+            padding: var(--round-md);
         }
 
         nav li {
