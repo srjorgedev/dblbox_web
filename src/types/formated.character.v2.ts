@@ -16,10 +16,10 @@ export interface Basic {
     num: number
     name: string
     color: Color[]
-    type: Type[] | Type
+    type: Type
     chapter: Chapter
     rarity: Rarity
-    tags: Tag[] | Tag
+    tags: Tag[] 
     lf: boolean
     transformable: boolean
     switch: boolean

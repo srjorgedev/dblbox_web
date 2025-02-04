@@ -7,7 +7,7 @@ import RenderCard from "../components/RenderCard.astro";
 const characters = await getSummaryCharacters();
 ---
 
-<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="DBL BOX - Personajes">
+<Layout Selected={1} Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="DBL BOX - Personajes">
 	<FilterSection />
 
 	<section class="characters-render">

@@ -12,6 +12,7 @@ export interface SummaryCharacter {
     switch: boolean
     zenkai: boolean
     fusion: boolean
+    states: number
 }
 
 export interface Color {

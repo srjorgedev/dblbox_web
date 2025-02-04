@@ -1,0 +1,468 @@
+---
+import type { SummaryCharacter } from "../../types/summary.formated.character";
+import SaveButton from "./SaveButton";
+import TierInfo from "./TierInfo.astro";
+import TierItems from "./TierItems.astro";
+import Tierlist from "./Tierlist.astro";
+
+interface Props {
+    rarPath: string;
+    characters: SummaryCharacter[];
+}
+
+const { rarPath, characters } = Astro.props;
+---
+
+<TierInfo rarPath={rarPath.toString()} />
+<Tierlist />
+
+<div class="tier-controls">
+    <button class="btn reset-btn">Reiniciar Tier</button>
+    <SaveButton client:idle />
+</div>
+
+<TierItems characters={characters} />
+
+<style is:global>
+    :root {
+        --color-s: #ff7f80;
+        --color-a: #ffc07f;
+        --color-b: #ffdf80;
+        --color-c: #fdff7f;
+        --color-d: #bfff7f;
+        --color-e: #7fff7f;
+    }
+
+    .loading-animation {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .tier-controls {
+        display: flex;
+        gap: 8px;
+        margin: 1rem 0 0 0;
+        padding: 0 1rem;
+        justify-content: flex-end;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow: hidden;
+        z-index: 1;
+        position: relative;
+    }
+
+    .reset-btn {
+        background: transparent;
+        outline: 2px solid #ff4757;
+        color: #f1f1f1;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 0%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #ff4757;
+            z-index: -1;
+            transition: all 0.15s ease-in-out;
+        }
+
+        &:hover::before {
+            width: 100%;
+        }
+    }
+
+    .reset-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .save-btn {
+        background: transparent;
+        outline: 2px solid #2ed573;
+        color: #f1f1f1;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 0%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #2ed573;
+            z-index: -1;
+            transition: all 0.15s ease-in-out;
+        }
+
+        &:hover::before {
+            width: 100%;
+        }
+    }
+
+    .save-btn:hover {
+        background: #7bed9f;
+        transform: translateY(-2px);
+    }
+
+    .item.selected {
+        outline: 3px solid #ffeb3b;
+        transform: scale(1.1);
+    }
+
+    .row.can-receive {
+        border-color: #4caf50;
+        background: rgba(76, 175, 80, 0.1);
+    }
+
+    .drag-preview {
+        opacity: 0.7;
+        transform: scale(0.9);
+    }
+
+    .selection-preview {
+        position: relative;
+        opacity: 0.5 !important;
+        transform: scale(0.9);
+        border: 2px dashed #ffffff;
+        filter: grayscale(100%);
+        transition: all 0.2s ease;
+        pointer-events: none;
+    }
+
+    .tier-items.can-receive {
+        border: 2px solid #ff9800;
+        background: rgba(255, 152, 0, 0.1);
+    }
+
+    .tier-items.can-receive {
+        border: 2px solid #ff9800;
+        background: rgba(255, 152, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .item.returning {
+        animation: returnPulse 1s ease;
+    }
+
+    @keyframes returnPulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @media (min-width: 769px) {
+        article.tiermaker-desc {
+            h1 {
+                font-size: 1.25rem;
+                font-weight: normal;
+            }
+
+            h2,
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+            section.tiermaker-list {
+                gap: 16px;
+
+                a {
+                    padding: 0.5rem 1rem;
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .tier-items {
+            grid-template-columns: repeat(10, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+    }
+
+    @media (max-width: 768px) {
+        .tier-capture {
+            transform: none !important;
+            width: 1280px !important;
+            left: 50% !important;
+            margin-left: -640px !important;
+        }
+    }
+</style>
+
+<script>
+    const itemsSection = document.querySelector<HTMLElement>(".tier-items");
+    const rows = document.querySelectorAll<HTMLElement>(".row");
+    let draggedElement: HTMLElement | null = null;
+    let sourceContainer: HTMLElement | null = null;
+    let selectedElement: HTMLElement | null = null;
+    let hoverPreview: HTMLElement | null = null;
+    let touchHandled = false;
+
+    const reset = document.querySelector<HTMLButtonElement>(".reset-btn");
+    const save = document.querySelector<HTMLButtonElement>(".save-btn");
+
+    reset?.addEventListener("click", handleReset);
+
+    const initialTierItemsHTML = itemsSection?.innerHTML || "";
+
+    function handleReset() {
+        rows.forEach((row) => (row.innerHTML = ""));
+
+        if (itemsSection) {
+            itemsSection.innerHTML = initialTierItemsHTML;
+            initializeItems();
+        }
+
+        selectedElement = null;
+        draggedElement = null;
+        sourceContainer = null;
+    }
+
+    function initializeItems() {
+        const items = document.querySelectorAll<HTMLElement>(".item");
+
+        items.forEach((item) => {
+            item.addEventListener("dragstart", handleDragStart);
+            item.addEventListener("dragend", handleDragEnd);
+            item.addEventListener("touchstart", handleItemClick, { passive: false });
+            item.addEventListener("click", handleItemClick);
+        });
+    }
+
+    function initializeRows() {
+        rows.forEach((row) => {
+            row.addEventListener("dragover", handleDragOver);
+            row.addEventListener("drop", handleDrop);
+            row.addEventListener("dragleave", handleDragLeave);
+            row.addEventListener("click", handleRowClick);
+            row.addEventListener("touchstart", handleRowClick);
+            row.addEventListener("mouseenter", handleRowHover);
+            row.addEventListener("mouseleave", handleRowHoverEnd);
+        });
+    }
+
+    function handleRowHover(event: MouseEvent) {
+        if (!selectedElement) return;
+
+        const targetRow = event.currentTarget as HTMLElement;
+        if (hoverPreview) hoverPreview.remove();
+
+        hoverPreview = selectedElement.cloneNode(true) as HTMLElement;
+        hoverPreview.classList.add("selection-preview");
+        hoverPreview.style.opacity = "0.5";
+        targetRow.appendChild(hoverPreview);
+    }
+
+    function handleRowHoverEnd(event: MouseEvent) {
+        if (hoverPreview) {
+            hoverPreview.remove();
+            hoverPreview = null;
+        }
+    }
+
+    function createItem(src: string): HTMLElement {
+        const imgElement = document.createElement("img");
+        imgElement.draggable = true;
+        imgElement.src = src;
+        imgElement.className = "item";
+
+        imgElement.addEventListener("dragstart", handleDragStart);
+        imgElement.addEventListener("dragend", handleDragEnd);
+        imgElement.addEventListener("click", handleItemClick);
+        imgElement.addEventListener("touchstart", handleItemClick);
+
+        return imgElement;
+    }
+
+    function moveItemToRow(item: HTMLElement, targetRow: HTMLElement): void {
+        const isFromPool = item.parentElement === itemsSection;
+
+        if (targetRow === itemsSection) {
+            if (itemsSection && itemsSection.firstChild) {
+                itemsSection.insertBefore(item, itemsSection.firstChild);
+            } else {
+                itemsSection?.appendChild(item);
+            }
+            item.style.opacity = "1";
+            item.classList.remove("selected");
+        } else if (isFromPool) {
+            const newItem = createItem((item as HTMLImageElement).src);
+            targetRow.appendChild(newItem);
+            itemsSection?.removeChild(item);
+        } else {
+            targetRow.appendChild(item);
+        }
+    }
+    function handleReturnToPool(event: MouseEvent) {
+        if (!selectedElement || !itemsSection) return;
+
+        const target = event.target as HTMLElement;
+        if (!target.closest(".item")) {
+            moveItemToRow(selectedElement, itemsSection);
+            selectedElement.classList.remove("selected");
+            selectedElement = null;
+            rows.forEach((row) => row.classList.remove("can-receive"));
+        }
+    }
+
+    if (itemsSection) {
+        itemsSection.addEventListener("click", handleReturnToPool);
+        itemsSection.addEventListener("dragover", handleDragOver);
+        itemsSection.addEventListener("drop", handleDrop);
+        itemsSection.addEventListener("dragleave", handleDragLeave);
+    }
+
+    function handleDragStart(event: DragEvent): void {
+        draggedElement = event.target as HTMLElement;
+        sourceContainer = draggedElement.parentElement;
+        if (draggedElement) draggedElement.style.opacity = "0.5";
+
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.setData("text/plain", (draggedElement as HTMLImageElement).src);
+        }
+    }
+
+    function handleDragEnd(): void {
+        if (draggedElement) {
+            draggedElement.style.opacity = "1";
+            draggedElement = null;
+        }
+        sourceContainer = null;
+    }
+
+    function handleDragOver(event: DragEvent): void {
+        event.preventDefault();
+        const currentTarget = event.currentTarget as HTMLElement;
+
+        if (!currentTarget.classList.contains("drag-over")) {
+            currentTarget.classList.add("drag-over");
+
+            if (draggedElement && !currentTarget.querySelector(".drag-preview")) {
+                const preview = draggedElement.cloneNode(true) as HTMLElement;
+                preview.classList.add("drag-preview");
+                currentTarget.appendChild(preview);
+            }
+        }
+    }
+
+    function handleDragLeave(event: DragEvent): void {
+        const currentTarget = event.currentTarget as HTMLElement;
+        const relatedTarget = event.relatedTarget as HTMLElement;
+
+        if (!currentTarget.contains(relatedTarget)) {
+            currentTarget.classList.remove("drag-over");
+            currentTarget.querySelector(".drag-preview")?.remove();
+        }
+    }
+
+    function handleDrop(event: DragEvent): void {
+        event.preventDefault();
+        const targetRow = event.currentTarget as HTMLElement;
+
+        if (draggedElement) {
+            const isFromPool = sourceContainer === itemsSection;
+
+            if (isFromPool) {
+                const clone = createItem((draggedElement as HTMLImageElement).src);
+                targetRow.appendChild(clone);
+                itemsSection?.removeChild(draggedElement);
+            } else {
+                moveItemToRow(draggedElement, targetRow);
+            }
+        }
+
+        targetRow.classList.remove("drag-over");
+        targetRow.querySelector(".drag-preview")?.remove();
+    }
+
+    function handleItemClick(event: MouseEvent | TouchEvent): void {
+        if (event.type === "touchstart" && touchHandled) return;
+        touchHandled = true;
+
+        const target = (event.target as HTMLElement).closest(".item");
+        if (!target) return;
+
+        event.stopPropagation();
+
+        if (selectedElement === target) {
+            target.classList.remove("selected");
+            selectedElement = null;
+        } else {
+            if (selectedElement) selectedElement.classList.remove("selected");
+            selectedElement = target as HTMLElement;
+            target.classList.add("selected");
+        }
+
+        rows.forEach((row) => row.classList.toggle("can-receive", !!selectedElement));
+    }
+    function handleRowClick(event: MouseEvent | TouchEvent): void {
+        if (!selectedElement) return;
+
+        const targetRow = event.currentTarget as HTMLElement;
+        if ((event.target as HTMLElement).closest(".item")) return;
+
+        moveItemToRow(selectedElement, targetRow);
+        selectedElement.classList.remove("selected");
+        selectedElement = null;
+        rows.forEach((row) => row.classList.remove("can-receive"));
+    }
+
+    document.addEventListener("click", (event) => {
+        if (!(event.target as HTMLElement).closest(".row, .item")) {
+            if (selectedElement) {
+                selectedElement.classList.remove("selected");
+                selectedElement = null;
+                rows.forEach((row) => row.classList.remove("can-receive"));
+            }
+        }
+    });
+
+    document.addEventListener("touchend", () => {
+        touchHandled = false;
+    });
+
+    initializeItems();
+    initializeRows();
+
+    import AutoScroller from "../../utils/AutoScroll";
+    const autoScroller = new AutoScroller({
+        margin: 100,
+        sensitivity: 0.5,
+        maxSpeed: 50
+    });
+</script>

@@ -1,0 +1,131 @@
+---
+interface Props {
+    rarPath: string;
+}
+
+enum TextRarity {
+    "he" = "HERO",
+    "ex" = "EXTREME",
+    "sp" = "SPARKING",
+    "ul" = "ULTRA",
+    "ll" = "Legends Limited",
+    "sp&ul" = "SPARKING & ULTRA",
+    "ll&ul" = "LEGENDS LIMITED & ULTRA"
+}
+
+const { rarPath } = Astro.props;
+---
+
+<article class="tiermaker-desc">
+    <h1>📊 Dragon Ball Legends Tier Maker</h1>
+    <h2 class="meta-subtitle">
+        ⚡ TIER LIST MAKER PARA {TextRarity[rarPath as keyof typeof TextRarity].toUpperCase()}
+        <span class="rising-rush-badge"></span>
+    </h2>
+    <p class="highlight">
+        ¡Crea y comparte tu Tier List personalizada de personajes {TextRarity[rarPath as keyof typeof TextRarity]}!<br />
+    </p>
+
+    <h3>🚀 Explorar otras categorías</h3>
+
+    <section class="tiermaker-list">
+        <a href="/tiermaker/he" class={`${rarPath == "he" ? "selected" : ""}`}>Hero</a>
+        <a href="/tiermaker/ex" class={`${rarPath == "ex" ? "selected" : ""}`}>Extreme</a>
+        <a href="/tiermaker/sp" class={`${rarPath == "sp" ? "selected" : ""}`}>Sparking</a>
+        <a href="/tiermaker/ul" class={`${rarPath == "ul" ? "selected" : ""}`}>Ultra</a>
+        <a href="/tiermaker/ll" class={`${rarPath == "ll" ? "selected" : ""}`}>Legends Limited</a>
+        <a href="/tiermaker/sp&ul" class={`${rarPath == "sp&ul" ? "selected" : ""}`}>Sparking & Ultra</a>
+        <a href="/tiermaker/ll&ul" class={`${rarPath == "ll&ul" ? "selected" : ""}`}>Legends Limited & Ultra</a>
+    </section>
+</article>
+
+<style>
+    article.tiermaker-desc {
+        padding: 0 1rem;
+        h1 {
+            font-size: 1rem;
+        }
+
+        h2,
+        h3 {
+            font-size: 1.125rem;
+        }
+
+        p {
+            font-size: 0.75rem;
+            margin: 0.5rem 0 0.75rem 0;
+        }
+
+        section.tiermaker-list {
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            a {
+                text-decoration: none;
+                color: #f1f1f1;
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+                background-color: var(--bg-second);
+                border-radius: 8px;
+                outline: 2px solid var(--bg-third);
+                position: relative;
+                z-index: 2;
+                transition: background-color 0.1s ease-in-out;
+
+                &.selected::before,
+                &::before {
+                    position: absolute;
+                    content: "";
+                    width: 0%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    background-color: var(--bg-third);
+                    filter: blur(8px);
+                    z-index: -1;
+                    transition: width 0.1s ease-in-out;
+                }
+
+                &:hover::before {
+                    width: 100%;
+                }
+
+                &.selected {
+                    background-color: var(--bg-third);
+                    font-weight: 600;
+
+                    &::before {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: 769px) {
+        article.tiermaker-desc {
+            h1 {
+                font-size: 1.25rem;
+                font-weight: normal;
+            }
+
+            h2,
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+            section.tiermaker-list {
+                gap: 16px;
+
+                a {
+                    padding: 0.5rem 1rem;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+</style>

@@ -3,6 +3,11 @@ import Dashboard from "./svg/Dashboard.astro";
 import User from "./svg/User.astro";
 import Lang from "./svg/Lang.astro";
 import Menu from "./svg/Menu.astro";
+interface Props {
+    Selected: number;
+}
+
+const { Selected } = Astro.props;
 ---
 
 <header>
@@ -10,7 +15,8 @@ import Menu from "./svg/Menu.astro";
         <h4>BOX</h4>
         <ul class="nav-links">
             <!-- <li><a href="/">Pagina principal</a></li> -->
-            <li><a href="/">Personajes</a></li>
+            <li class={Selected == 1 ? "selected" : ""}><a href="/">Personajes</a></li>
+            <li class={Selected == 2 ? "selected" : ""}><a href="/tiermaker/sp">Tiermaker</a></li>
             <!-- <li><a href="/equips">Fragmentos</a></li> -->
         </ul>
         <ul class="nav-buttons">
@@ -74,22 +80,49 @@ import Menu from "./svg/Menu.astro";
         }
 
         ul.nav-links {
-            gap: 1.25rem;
+            gap: 16px;
+
+            .selected::after, .selected::before {
+                width: 100%;
+                content: "";
+                height: 20%;
+                background: #f1f1f1;
+                position: absolute;
+                bottom: -12.5%;
+                left: 0;
+                transition: all 0.15s ease-in-out;
+            }
+
             li {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 list-style-type: none;
-                padding: 0.5rem 1rem;
+                padding: 0.5rem 0;
                 border-radius: var(--round-md);
                 transition: background 0.3s ease-in-out;
+                position: relative;
 
-                &:hover {
-                    background-color: #f1f1f1;
+                &:not(.selected)::after,
+                &:not(.selected)::before {
+                    content: "";
+                    width: 0%;
+                    height: 20%;
+                    background: #cecece;
+                    position: absolute;
+                    bottom: -12.5%;
+                    left: 0;
+                    transition: all 0.15s ease-in-out;
+                }
 
-                    a {
-                        filter: invert();
-                    }
+                &:not(.selected):hover::after,
+                &:not(.selected):hover::before {
+                    width: 100%;
+                }
+
+                &:not(.selected)::before {
+                    filter: blur(8px);
+                    z-index: -1;
                 }
 
                 a {

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404</title>
+    </head>
+    <body>
+        <main class="error-page" role="main">
+            <div class="grid-background" aria-hidden="true">
+                {[...Array(64)].map((_, i) => <div />)}
+            </div>
+
+            <section class="content">
+                <header class="ghost-container">
+                    <div class="circles" aria-hidden="true">
+                        <div class="circle circle-primary"></div>
+                        <div class="circle circle-secondary"></div>
+                    </div>
+
+                    <div class="ghost-wrapper">
+                        <svg
+                            class="ghost-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Ghost illustration"
+                        >
+                            <path
+                                d="M12 3C7.58172 3 4 6.58172 4 11V17.5C4 19.985 6.015 22 8.5 22C9.673 22 10.736 21.486 11.5 20.681C12.264 21.486 13.327 22 14.5 22C16.985 22 19 19.985 19 17.5V11C19 6.58172 15.4183 3 11 3H12Z"
+                                class="ghost-body"></path>
+                            <circle cx="9" cy="11" r="1" class="ghost-eye"></circle>
+                            <circle cx="15" cy="11" r="1" class="ghost-eye"></circle>
+                        </svg>
+                    </div>
+                </header>
+
+                <article class="text-content">
+                    <h1>
+                        <span class="visually-hidden">Error</span>
+                        404
+                    </h1>
+                    <h2 class="subtitle">Página no encontrada.</h2>
+                    <p class="message">
+                        ¡Ups! Parece que te has perdido. La página que buscas ha desaparecido en el aire.
+                    </p>
+                </article>
+
+                <nav class="navigation">
+                    <a href="/" class="button" aria-label="Return to homepage"> Volver al inicio </a>
+                </nav>
+            </section>
+
+            <div class="bottom-border" aria-hidden="true"></div>
+        </main>
+    </body>
+</html>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    :root {
+        --background: rgb(10, 22, 37);
+        --foreground: #ffffff;
+        --foreground-rgb: 255, 255, 255;
+        --muted: #1e293b;
+        --muted-foreground: #94a3b8;
+        --primary: #3b82f6;
+        --primary-rgb: 59, 130, 246;
+        --primary-foreground: #ffffff;
+        --secondary: #10b981;
+        --secondary-rgb: 16, 185, 129;
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .error-page {
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    .grid-background {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 1px;
+        opacity: 0.02;
+        pointer-events: none;
+    }
+
+    .grid-background > div {
+        background-color: var(--foreground);
+    }
+
+    .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem 1rem;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .ghost-container {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .circles {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    }
+
+    .circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+    }
+
+    .circle-primary {
+        height: 300px;
+        width: 300px;
+        background: radial-gradient(circle, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0));
+        filter: blur(16px);
+    }
+
+    .circle-secondary {
+        height: 200px;
+        width: 200px;
+        background: radial-gradient(circle, rgba(var(--secondary-rgb), 0.2), rgba(var(--secondary-rgb), 0));
+        filter: blur(16px);
+    }
+
+    .ghost-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 160px;
+        border-radius: 24px;
+        background: linear-gradient(to bottom right, var(--background), var(--muted));
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .ghost-icon {
+        width: 80px;
+        height: 80px;
+        color: var(--primary);
+    }
+
+    .ghost-body {
+        fill: currentColor;
+    }
+
+    .ghost-eye {
+        fill: var(--background);
+    }
+
+    .text-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-width: 600px;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: clamp(4rem, 10vw, 5rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        background: linear-gradient(to bottom right, var(--foreground), var(--muted-foreground));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .subtitle {
+        margin: 0;
+        font-size: clamp(1.875rem, 5vw, 2.25rem);
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .message {
+        margin: 1rem 0 0;
+        color: var(--muted-foreground);
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        line-height: 1.6;
+    }
+
+    .navigation {
+        margin-top: 1rem;
+    }
+
+    .button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--primary-foreground);
+        background: linear-gradient(to bottom right, var(--primary), rgba(var(--primary-rgb), 0.8));
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+        background: linear-gradient(to bottom right, rgba(var(--primary-rgb), 0.9), rgba(var(--primary-rgb), 0.7));
+        box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+    }
+
+    .bottom-border {
+        position: absolute;
+        inset-inline: 0;
+        bottom: -1px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(var(--foreground-rgb), 0.1), transparent);
+    }
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ghost-wrapper {
+            animation: none;
+        }
+
+        .button {
+            transition: none;
+        }
+    }
+</style>

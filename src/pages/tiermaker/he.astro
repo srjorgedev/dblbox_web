@@ -1,0 +1,16 @@
+---
+import Tier from "../../components/tiermaker/Tier.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getHero } from "../../services/getData";
+
+type PathName = "he" | "ex" | "sp" | "ul" | "ll" | "sp&ul" | "ll&ul";
+
+const characters = await getHero();
+
+const path = Astro.url.pathname.split("/");
+const rarPath = path[2] as PathName;
+---
+
+<Layout Selected={2} Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="DBL BOX - Tiermaker">
+    <Tier characters={characters} rarPath={rarPath.toString()} />
+</Layout>

@@ -1,0 +1,72 @@
+---
+import type { SummaryCharacter } from "../../types/summary.formated.character";
+import { ICO_API_URL } from "../../utils/API";
+
+interface Props {
+    characters: SummaryCharacter[];
+}
+
+const { characters } = Astro.props;
+---
+
+<section class="tier-items">
+    {
+        characters.map((c) => {
+            if (c.states == 1) return <img class="item" src={`${ICO_API_URL}${c.num}.webp`} alt={`image of ${c.name}`} />;
+            if (c.states == 2 && c.switch == true && c.transformable == false)
+                return <img class="item" src={`${ICO_API_URL}${c.num}0.webp`} alt={`image of ${c.name}`} />;
+            if (c.states == 2 && c.switch == false && c.transformable == true)
+                return (
+                    <>
+                        <img class="item" src={`${ICO_API_URL}${c.num}.webp`} alt={`image of ${c.name}`} />
+                        <img class="item" src={`${ICO_API_URL}${c.num}2.webp`} alt={`image of ${c.name}`} />
+                    </>
+                );
+            if (c.states == 3)
+                return (
+                    <>
+                        <img class="item" src={`${ICO_API_URL}${c.num}0.webp`} alt={`image of ${c.name}`} />
+                        <img class="item" src={`${ICO_API_URL}${c.num}3.webp`} alt={`image of ${c.name}`} />
+                    </>
+                );
+        })
+    }
+</section>
+
+<style>
+    .tier-items {
+        margin: 1rem;
+        border: 1px solid #444;
+        display: grid;
+        place-items: center;
+        grid-template-columns: repeat(5, 1fr);
+        background: #1f1f1f;
+        border-radius: var(--round-md);
+        overflow: hidden;
+        gap: 8px;
+        padding: 8px;
+        user-select: none;
+
+        .item,
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .item {
+            position: relative;
+            cursor: grab;
+
+            &.drag-preview {
+                opacity: 0.2;
+                pointer-events: none;
+            }
+        }
+    }
+    
+    @media (min-width: 769px) {
+        .tier-items {
+            grid-template-columns: repeat(10, 1fr);
+        }
+    }
+</style>

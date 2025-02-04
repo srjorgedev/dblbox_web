@@ -1,0 +1,119 @@
+<section class="tier">
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-s)">
+            <span contenteditable="true">S</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-a)">
+            <span contenteditable="true">A</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-b)">
+            <span contenteditable="true">B</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-c)">
+            <span contenteditable="true">C</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-d)">
+            <span contenteditable="true">D</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+
+    <div class="row-container">
+        <aside class="label" style="--level: var(--color-e)">
+            <span contenteditable="true">E</span>
+        </aside>
+        <div class="row"></div>
+    </div>
+</section>
+
+<style>
+    .tier {
+        border: 1px solid #444;
+        display: flex;
+        flex-direction: column;
+        background: #1f1f1f;
+        margin: 0 1rem;
+        border-radius: var(--round-md);
+        overflow: hidden;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .row-container {
+            display: grid;
+            grid-template-columns: minmax(2.5rem, 4rem) auto;
+
+            .label {
+                cursor: pointer;
+                background: var(--level, #09f);
+                color: #333;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 1rem;
+                }
+
+                & span:focus {
+                    outline: 1px solid #fff;
+                }
+            }
+
+            .row .item {
+                width: auto;
+                height: 4.5rem; /* Ajusta esto según el tamaño que prefieras */
+                aspect-ratio: 1 / 1;
+            }
+
+            .row {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+                border-bottom: 1px solid #111;
+                transition: all 0.3s ease;
+                min-height: 5rem;
+                width: 100%;
+                align-items: center;
+                padding: 8px;
+                place-items: center;
+
+                &.drag-over {
+                    background: #555;
+                    scale: 1.01;
+                }
+            }
+        }
+    }
+    
+    @media (min-width: 1024px) {
+    }
+</style>
