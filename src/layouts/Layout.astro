@@ -12,6 +12,8 @@ interface Props {
 
 const { Title, ICO, Color = "", Selected } = Astro.props;
 const Cannonical = new URL(Astro.url.pathname, Astro.site).pathname;
+
+const splitedTitle = Title.split(" - ");
 ---
 
 <!doctype html>
@@ -46,7 +48,7 @@ const Cannonical = new URL(Astro.url.pathname, Astro.site).pathname;
 				/>
 			)
 		}
-		{Cannonical.includes("/character") && <meta property="og:description" content={`Detalles del personaje ${Title}`} />}
+		{Cannonical.includes("/character") && <meta property="og:description" content={`Detalles de: ${splitedTitle[1]}`} />}
 		{Cannonical.includes("/tiermaker") && <meta property="og:description" content={`Crea tu Tier List en ${Title}`} />}
 
 		<meta property="fb:app_id" content="623481287285314" />
