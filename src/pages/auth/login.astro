@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="Iniciar Sesion">
+<Layout Selected={0} ICO="default" Title="Iniciar Sesion">
     <article class="login-section">
         <section>
             <form method="post" action="/actions/log-in">

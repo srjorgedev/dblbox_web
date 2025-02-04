@@ -11,6 +11,6 @@ const path = Astro.url.pathname.split("/");
 const rarPath = path[2] as PathName;
 ---
 
-<Layout Selected={2} Cannonical={new URL(Astro.url.pathname, Astro.site)} ICO="default" Title="DBL BOX - Tiermaker">
+<Layout Selected={2} ICO="default" Title="DBL BOX - Tiermaker">
     <Tier characters={characters} rarPath={rarPath.toString()} />
 </Layout>

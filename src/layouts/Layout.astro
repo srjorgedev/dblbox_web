@@ -6,12 +6,12 @@ import Analytics from "@vercel/analytics/astro";
 interface Props {
 	Title: string;
 	ICO: string;
-	Cannonical: URL;
 	Color?: string;
 	Selected: number;
 }
 
-const { Title, ICO, Cannonical, Color = "", Selected } = Astro.props;
+const { Title, ICO, Color = "", Selected } = Astro.props;
+const Cannonical = new URL(Astro.url.pathname, Astro.site).pathname;
 ---
 
 <!doctype html>
@@ -29,11 +29,31 @@ const { Title, ICO, Cannonical, Color = "", Selected } = Astro.props;
 		<meta name="google-adsense-account" content="ca-pub-7780837724792452" />
 		<base href="https://www.dbl-box.com/" />
 		<!-- <base href="http://localhost:4321/" /> -->
+
 		<meta name="facebook-domain-verification" content="xjl2mvg6dgmiaswcih162e1uo5zjkw" />
+		<meta property="og:url" content=`https://www.dbl-box.com${Cannonical}` />
 		<meta property="og:site_name" content="DBL BOX" />
 		<meta property="og:title" content={`${Title} | DBL BOX`} />
+		<meta property="og:type" content="webpage" />
+
+		{
+			Cannonical === "/" && (
+				<meta
+					property="og:description"
+					content="DBL BOX es tu fuente definitiva para todo sobre Dragon Ball Legends. 
+		Encuentra información detallada de personajes, habilidades, equipamientos y más, todo presentado de manera clara y accesible. 
+		Además, disfruta de herramientas como una calculadora de rangos y un Tiermaker para clasificar a tus personajes favoritos de forma fácil y divertida."
+				/>
+			)
+		}
+		{Cannonical.includes("/character") && <meta property="og:description" content={`Detalles del personaje ${Title}`} />}
+		{Cannonical.includes("/tiermaker") && <meta property="og:description" content={`Crea tu Tier List en ${Title}`} />}
+
+		<meta property="fb:app_id" content="623481287285314" />
+
 		<meta name="twitter:title" content={`${Title} | DBL BOX`} />
-		<link rel="canonical" href={Cannonical} />
+
+		<link rel="canonical" href=`https://www.dbl-box.com${Cannonical}` />
 		<meta
 			name="description"
 			content="DBL BOX es tu fuente definitiva para todo sobre Dragon Ball Legends. Encuentra información detallada de personajes, habilidades, equipamientos y más, todo presentado de manera clara y accesible. Además, disfruta de herramientas como una calculadora de rangos y un Tiermaker para clasificar a tus personajes favoritos de forma fácil y divertida."
