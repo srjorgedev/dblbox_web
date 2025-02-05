@@ -92,10 +92,13 @@ const splitedTitle = Title.split(" - ");
 	:root {
 		--bg-main: rgb(10, 22, 37);
 		--bg-second: rgba(20, 44, 74, 0.078);
-		--bg-third: rgba(40, 88, 148, 0.28);
+		--bg-third: rgba(40, 88, 148, var(--opacity-4));
 
-		--opacity-1: 0.1;
-		--opacity-2: 0.3;
+		--opacity-1: 0.175;
+		--opacity-2: 0.5;
+
+		--opacity-3: 0.05;
+		--opacity-4: 0.3;
 
 		--bg-strike: rgba(135, 20, 13, var(--opacity-1));
 		--bg-blast: rgba(206, 126, 2, var(--opacity-1));
@@ -121,20 +124,20 @@ const splitedTitle = Title.split(" - ");
 		--roung-xl: 24px;
 		--round-xxl: 32px;
 
-		--blu-100: rgba(0, 204, 255, 0.048);
-		--blu-50: rgba(0, 204, 255, 0.28);
+		--blu-100: rgba(0, 204, 255, var(--opacity-3));
+		--blu-50: rgba(0, 204, 255, var(--opacity-4));
 
-		--grn-100: rgba(21, 255, 0, 0.048);
-		--grn-50: rgba(21, 255, 0, 0.28);
+		--grn-100: rgba(21, 255, 0, var(--opacity-3));
+		--grn-50: rgba(21, 255, 0, var(--opacity-4));
 
-		--pur-100: rgba(98, 0, 255, 0.048);
-		--pur-50: rgba(98, 0, 255, 0.28);
+		--pur-100: rgba(98, 0, 255, var(--opacity-3));
+		--pur-50: rgba(98, 0, 255, var(--opacity-4));
 
-		--yel-100: rgba(255, 255, 0, 0.048);
-		--yel-50: rgba(255, 255, 0, 0.28);
+		--yel-100: rgba(255, 255, 0, var(--opacity-3));
+		--yel-50: rgba(255, 255, 0, var(--opacity-4));
 
-		--red-100: rgba(255, 0, 0, 0.048);
-		--red-50: rgba(255, 0, 0, 0.28);
+		--red-100: rgba(255, 0, 0, var(--opacity-3));
+		--red-50: rgba(255, 0, 0, var(--opacity-4));
 	}
 
 	html {

@@ -14,12 +14,12 @@ export interface Ability {
 export interface Basic {
     _id: string
     num: number
-    name: string
+    name: string | Name
     color: Color[]
     type: Type
     chapter: Chapter
     rarity: Rarity
-    tags: Tag[] 
+    tags: Tag[]
     lf: boolean
     transformable: boolean
     switch: boolean
@@ -27,6 +27,13 @@ export interface Basic {
     fusion: boolean
     states: number
     zenkaiStates: number
+}
+
+export interface Name {
+    name1: string
+    name2: string
+    name3?: string
+    title?: string
 }
 
 export interface Color {

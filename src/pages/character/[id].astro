@@ -10,6 +10,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getCharacter } from "../../services/getData";
 import { CUT_API_URL, ICO_API_URL } from "../../utils/API";
 import { COLORS, RARITY, RARITY_BIG } from "../../utils/atributes";
+import type { Name } from "../../types/formated.character.v2";
 
 const { id } = Astro.params;
 
@@ -19,14 +20,11 @@ const { abilities, arts, zenkaiAbilities, zenkaiArts, basic } = character;
 const color = COLORS[basic.color[0]._id];
 const rar = RARITY[basic.rarity._id];
 const rarity = RARITY_BIG[basic.rarity._id];
+
+let title = typeof basic.name === "string" ? basic.name : (basic.name as Name).title;
 ---
 
-<Layout
-    Selected={0}
-    Color=`color-${color.toLocaleLowerCase()}`
-    ICO={`${ICO_API_URL}${id}.webp`}
-    Title={`${basic._id} - ${basic.name}`}
->
+<Layout Selected={0} Color=`color-${color.toLocaleLowerCase()}` ICO={`${ICO_API_URL}${id}.webp`} Title={`${basic._id} - ${title}`}>
     <div class={`character ${color}`}>
         <section class={`character-banner ${color}`} data-stage="first">
             <img class="bchacut st on" src={`${CUT_API_URL}${id}.webp`} alt="" />
@@ -48,9 +46,43 @@ const rarity = RARITY_BIG[basic.rarity._id];
             <article class="text">
                 <img class="character-element" src={`/element/${color}1.webp`} alt="Afinidad del personaje" />
                 <h3>{basic._id}</h3>
-                <h1>{basic.name}</h1>
+                {typeof character.basic.name === "string" && <h1>{basic.name}</h1>}
+                {
+                    typeof character.basic.name !== "string" && (
+                        <>
+                            <h1 class="st on">{(basic.name as Name).name1}</h1>
+                            <h1 class="nd off">{(basic.name as Name).name2}</h1>
+                            {(basic.name as Name).name3 && <h1 class="rd off">{(basic.name as Name).name3}</h1>}
+                        </>
+                    )
+                }
             </article>
         </section>
+        <section class="tags-section tags">
+            <header>
+                <h2>Etiquetas</h2>
+            </header>
+            <main>
+                {
+                    basic.tags.map((tag) => {
+                        return <a href={`/characters/tag/${tag._id}`}>{tag.tag}</a>;
+                    })
+                }
+            </main>
+        </section>
+        <section class="tags-section chapter">
+            <header>
+                <h2>Capítulo</h2>
+            </header>
+            <main>
+                <article>
+                    <div class="tag">
+                        <a href={`/characters/chapter/${basic.chapter._id}`}>{basic.chapter.tag}</a>
+                    </div>
+                </article>
+            </main>
+        </section>
+
         {
             abilities.ultra && (
                 <section class="character-ability">
@@ -351,6 +383,34 @@ const rarity = RARITY_BIG[basic.rarity._id];
             outline: 1px solid var(--color-2);
         }
 
+        section.tags-section {
+            margin: 0 1rem;
+            height: 100%;
+            header {
+                h2 {
+                    font-size: 1.25rem;
+                    margin-bottom: 8px;
+                }
+            }
+            main {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin: 16px 0 24px 0;
+
+                a {
+                    padding: 12px 24px;
+                    text-decoration: none;
+                    color: #c1c1c1;
+                    background-color: #232323;
+                    font-size: 0.75rem;
+                    border-radius: 8px;
+                    line-height: normal;
+                }
+            }
+        }
+
         section.character-ability {
             h2 {
                 font-size: 1.25rem;
@@ -370,6 +430,7 @@ const rarity = RARITY_BIG[basic.rarity._id];
                 pre {
                     margin-bottom: 1rem;
                     font-size: 0.7rem; /* Estilo base para móvil */
+                    line-height: 1;
 
                     &.z,
                     &.z-limited,
@@ -406,7 +467,8 @@ const rarity = RARITY_BIG[basic.rarity._id];
         .character-banner {
             display: flex;
             position: relative;
-            outline: 1px solid;
+            outline: 1px solid var(--color-2);
+            background-color: var(--color-1);
             margin-bottom: 1rem;
 
             img:not(img.bchacut),
@@ -493,36 +555,15 @@ const rarity = RARITY_BIG[basic.rarity._id];
                 h1 {
                     font-size: 1.25rem;
                     line-height: 1;
+                    text-shadow:
+                        2px 2px 4px var(--bg-main),
+                        -2px -2px 4px var(--bg-main);
                 }
                 h3 {
                     font-size: 0.75rem;
                     font-weight: 500;
                     line-height: 1;
                 }
-            }
-
-            &.PUR {
-                background-color: rgba(98, 0, 255, 0.048);
-                outline: 1px solid rgba(98, 0, 255, 0.28);
-            }
-
-            &.RED {
-                background-color: rgba(255, 0, 0, 0.048);
-                outline: 1px solid rgba(255, 0, 0, 0.28);
-            }
-
-            &.GRN {
-                background-color: rgba(21, 255, 0, 0.048);
-                outline: 1px solid rgba(21, 255, 0, 0.28);
-            }
-
-            &.BLU {
-                background-color: rgba(0, 204, 255, 0.048);
-                outline: 1px solid rgba(0, 204, 255, 0.28);
-            }
-            &.YEL {
-                background-color: rgba(255, 255, 0, 0.048);
-                outline: 1px solid rgba(255, 255, 0, 0.28);
             }
         }
     }
@@ -624,6 +665,19 @@ const rarity = RARITY_BIG[basic.rarity._id];
                 }
             }
 
+            section.tags-section {
+                header {
+                    h2 {
+                        font-size: 1.5rem;
+                    }
+                }
+                main {
+                    a {
+                        font-size: 0.95rem;
+                    }
+                }
+            }
+
             section.character-ability {
                 h2 {
                     font-size: 1.5rem;
@@ -631,10 +685,10 @@ const rarity = RARITY_BIG[basic.rarity._id];
 
                 article.ability {
                     h3 {
-                        font-size: 1.25rem;
+                        font-size: 1rem;
                     }
                     pre {
-                        font-size: 1rem;
+                        font-size: 0.95rem;
                     }
 
                     section.button-tab {

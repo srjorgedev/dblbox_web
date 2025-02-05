@@ -1,7 +1,7 @@
 export interface SummaryCharacter {
     _id: string
     num: number
-    name: string
+    name: string | Name
     color: Color[]
     type: Type
     chapter: Chapter
@@ -13,6 +13,13 @@ export interface SummaryCharacter {
     zenkai: boolean
     fusion: boolean
     states: number
+}
+
+export interface Name {
+    name1: string
+    name2: string
+    name3?: string
+    title?: string
 }
 
 export interface Color {
