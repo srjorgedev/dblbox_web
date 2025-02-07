@@ -82,13 +82,14 @@ const { Selected } = Astro.props;
         ul.nav-links {
             gap: 16px;
 
-            .selected::after, .selected::before {
+            .selected::after,
+            .selected::before {
                 width: 100%;
                 content: "";
-                height: 20%;
+                height: 25%;
                 background: #f1f1f1;
                 position: absolute;
-                bottom: -12.5%;
+                bottom: -40%;
                 left: 0;
                 transition: all 0.15s ease-in-out;
             }
@@ -107,10 +108,10 @@ const { Selected } = Astro.props;
                 &:not(.selected)::before {
                     content: "";
                     width: 0%;
-                    height: 20%;
+                    height: 25%;
                     background: #cecece;
                     position: absolute;
-                    bottom: -12.5%;
+                    bottom: -40%;
                     left: 0;
                     transition: all 0.15s ease-in-out;
                 }

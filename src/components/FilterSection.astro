@@ -1,61 +1,112 @@
 ---
-import reset from "../assets/reset.svg";
 import Reset from "./svg/Reset.astro";
 ---
 
 <section class="filters">
-    <h4>FILTROS</h4>
-
-    <div class="filters-select">
-        <select class="filter-color">
-            <option selected hidden value="">Color</option>
-            <option value="1">ROJ</option>
-            <option value="2">AMA</option>
-            <option value="3">MOR</option>
-            <option value="4">VER</option>
-            <option value="5">AZU</option>
-        </select>
-        <select class="filter-type">
-            <option selected hidden value="">Tipo</option>
-            <option value="1">APOYO</option>
-            <option value="2">DEFENSA</option>
-            <option value="3">FÍSICO</option>
-            <option value="4">ENERGÍA</option>
-        </select>
-        <select class="filter-rarity">
-            <option selected hidden value="">Rareza</option>
-            <option value="1">HERO</option>
-            <option value="2">EXTREME</option>
-            <option value="3">SPARKING</option>
-            <option value="4">ULTRA</option>
-        </select>
-        <select class="filter-ll" hidden>
-            <option selected hidden value="">Legends Limited</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
-        </select>
-        <button class="clear-filters">
-            <Reset />
+    <div class="filters-header">
+        <h4>FILTROS</h4>
+        <button class="clear-filters desktop-only">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+            </svg>
         </button>
+    </div>
+
+    <div class="filters-mobile-actions">
+        <button class="toggle-filters">Mostrar filtros</button>
+        <button class="clear-filters">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="filters-content">
+        <div class="filters-select">
+            <select class="filter-color">
+                <option selected hidden value="">Color</option>
+                <option value="1">ROJ</option>
+                <option value="2">AMA</option>
+                <option value="3">MOR</option>
+                <option value="4">VER</option>
+                <option value="5">AZU</option>
+            </select>
+            <select class="filter-type">
+                <option selected hidden value="">Tipo</option>
+                <option value="1">APOYO</option>
+                <option value="2">DEFENSA</option>
+                <option value="3">FÍSICO</option>
+                <option value="4">ENERGÍA</option>
+            </select>
+            <select class="filter-rarity">
+                <option selected hidden value="">Rareza</option>
+                <option value="1">HERO</option>
+                <option value="2">EXTREME</option>
+                <option value="3">SPARKING</option>
+                <option value="4">ULTRA</option>
+            </select>
+            <select class="filter-ll">
+                <option selected hidden value="">Legends Limited</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+            <select class="filter-zenkai">
+                <option selected hidden value="">Zenkai</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+        </div>
     </div>
 </section>
 
 <script>
-    const clearFiltersButton = document.querySelector<HTMLButtonElement>(".clear-filters");
+    const clearFiltersButton = document.querySelectorAll<HTMLButtonElement>(".clear-filters");
     const characterCards = document.querySelectorAll<HTMLAnchorElement>("a.character-card");
     const filterByColor = document.querySelector<HTMLSelectElement>("select.filter-color");
     const filterByType = document.querySelector<HTMLSelectElement>("select.filter-type");
     const filterByRarity = document.querySelector<HTMLSelectElement>("select.filter-rarity");
 
+    const filterHasZenkai = document.querySelector<HTMLSelectElement>("select.filter-zenkai");
     const filterIsLL = document.querySelector<HTMLSelectElement>(".filter-ll");
 
-    let activeFilters: { color?: number; type?: number; rarity?: number; ll?: boolean } = {};
+    let activeFilters: { color?: number; type?: number; rarity?: number; ll?: boolean; zenkai?: boolean } = {};
 
     filterIsLL?.addEventListener("change", (e) => {
         const selectedValue = (e.currentTarget as HTMLSelectElement).value;
 
         if (selectedValue == "true") activeFilters.ll = true;
         if (selectedValue == "false") activeFilters.ll = false;
+
+        applyFilters();
+    });
+
+    filterHasZenkai?.addEventListener("change", (e) => {
+        const selectedValue = (e.currentTarget as HTMLSelectElement).value;
+
+        if (selectedValue == "true") activeFilters.zenkai = true;
+        if (selectedValue == "false") activeFilters.zenkai = false;
 
         applyFilters();
     });
@@ -121,6 +172,13 @@ import Reset from "./svg/Reset.astro";
                 }
             }
 
+            if (activeFilters.zenkai !== undefined) {
+                const zenkai = JSON.parse(card.dataset.zenkai!) as boolean;
+                if (zenkai !== activeFilters.zenkai) {
+                    shouldHide = true;
+                }
+            }
+
             if (shouldHide) {
                 card.classList.add("hidden");
             } else {
@@ -129,7 +187,8 @@ import Reset from "./svg/Reset.astro";
         });
     }
 
-    clearFiltersButton?.addEventListener("click", clearFilter);
+    clearFiltersButton[0]?.addEventListener("click", clearFilter);
+    clearFiltersButton[1]?.addEventListener("click", clearFilter);
 
     function clearFilter(): void {
         const previousClass = document.documentElement.classList.value.match(/color-[a-z]+/);
@@ -137,11 +196,20 @@ import Reset from "./svg/Reset.astro";
 
         activeFilters = {};
         filterIsLL!.value = "";
+        filterHasZenkai!.value = "";
         filterByColor!.value = "";
         filterByType!.value = "";
         filterByRarity!.value = "";
         applyFilters();
     }
+
+    const toggleButton = document.querySelector(".toggle-filters");
+    const filtersContent = document.querySelector(".filters-content");
+
+    toggleButton?.addEventListener("click", function () {
+        filtersContent!.classList.toggle("show");
+        toggleButton.textContent = filtersContent!.classList.contains("show") ? "Ocultar filtros" : "Mostrar filtros";
+    });
 </script>
 
 <style>
@@ -150,31 +218,57 @@ import Reset from "./svg/Reset.astro";
         --color-2: var(--bg-third);
     }
 
-    h4 {
-        font-weight: 600;
-        font-size: 1rem;
-    }
-
     .filters {
         display: flex;
         flex-direction: column;
         padding: 1rem;
         gap: 1rem;
-        position: relative;
+        width: 100%;
+    }
+
+    .filters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h4 {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    /* Botón para mostrar filtros en mobile */
+    .toggle-filters {
+        display: none;
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+        border: none;
+        background-color: var(--color-2);
+        color: white;
+        font-size: 1rem;
+        text-align: center;
+        border-radius: var(--round-md);
+        flex: 1;
+    }
+
+    /* Contenedor de filtros */
+    .filters-content {
+        width: 100%;
     }
 
     .filters-select {
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: 0.5rem;
     }
 
     select {
+        width: 100%;
         border-radius: var(--round-md);
         text-align: center;
         padding: 0.75rem;
         font-size: 1rem;
-        background: none;
         background-color: var(--color-1);
         border: 2px solid var(--color-2);
         color: #f1f1f1;
@@ -182,18 +276,13 @@ import Reset from "./svg/Reset.astro";
         transition:
             background 0.15s ease-in-out,
             border 0.15s ease-in-out;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
     }
 
     option {
-        display: block;
-        text-align: center;
         background-color: #333333;
     }
 
-    button {
+    .clear-filters {
         cursor: pointer;
         aspect-ratio: 1;
         border-radius: var(--round-md);
@@ -201,55 +290,79 @@ import Reset from "./svg/Reset.astro";
         align-items: center;
         justify-content: center;
         background-color: #f1f1f1;
+        border: none;
+        padding: 0.5rem;
         transition: background-color 0.3s ease;
-        position: absolute;
-        top: 10%;
-        right: 2.5rem;
-
-        &:hover {
-            background-color: #e0e0e0;
-        }
-
-        svg {
-            width: 50%;
-            height: 50%;
-            object-fit: cover;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        &:hover svg {
-            transform: rotate(0.75turn);
-        }
     }
 
-    @media (min-width: 600px) {
-        .filters {
-            padding: 1rem 2rem;
+    .clear-filters:hover {
+        background-color: #e0e0e0;
+    }
+
+    .clear-filters svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .clear-filters:hover svg {
+        transform: rotate(0.75turn);
+    }
+
+    .filters-mobile-actions {
+        display: none;
+        flex-direction: row;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .desktop-only {
+        display: flex;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+        .filters-select {
+            grid-template-columns: 1fr;
         }
 
-        .filters-select {
-            flex-direction: row;
-            gap: 0.5rem;
+        .desktop-only {
+            display: none;
+        }
+
+        .toggle-filters {
+            display: block;
+        }
+
+        .filters-mobile-actions {
+            display: flex;
+        }
+
+        .filters-content {
+            display: none;
+        }
+
+        .filters-content.show {
+            display: block;
+        }
+
+        .clear-filters {
+            aspect-ratio: 1;
+            width: 44px;
         }
     }
 
     @media (min-width: 769px) {
-        h4 {
-            font-size: 1.25rem;
+        .filters {
+            padding: 1rem 2rem;
         }
-        button {
-            position: relative;
-            top: unset;
-            right: unset;
-            align-self: center;
-            margin-left: 0.5rem;
-            padding: 0.5rem;
-            border-radius: var(--round-md);
 
-            svg {
-                width: 70%;
-                height: 70%;
-            }
+        .filters-mobile-actions {
+            display: none;
+        }
+
+        .filters-content {
+            display: block !important;
         }
     }
 </style>
